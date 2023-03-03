@@ -1,4 +1,6 @@
-"use strict";
+import * as PIXI from 'pixi.js';
 class World {
-    constructor() { }
+    constructor() {
+        this.app = new PIXI.Application();
+    }
 }
