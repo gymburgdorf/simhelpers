@@ -13567,9 +13567,31 @@ class Ho {
       s.app.stage.addChild(n), window.addEventListener("resize", () => s.resizeBG(n)), n.texture.baseTexture.on("loaded", () => {
         s.resizeBG(n), r(s);
       });
-    }) : s;
+    }) : (s.setSizeFromDim(), s);
   }
   getSize() {
+  }
+  setSizeFromDim() {
+    const { w: t, h: s } = this.originalParams;
+    if (!t || !s) {
+      console.warn("Please provide image or w,h in units");
+      return;
+    }
+    this.dimPx = this.element.getBoundingClientRect();
+    const i = Math.min(this.dimPx.width, window.innerWidth), r = Math.min(this.dimPx.height || window.innerHeight, window.innerHeight), n = Math.min(i / t, r / s);
+    this.app.view.width = t * n, this.app.view.height = s * n, this.dimPx = this.element.getBoundingClientRect();
+  }
+  rescale() {
+    const t = this.originalParams;
+    if (t.w)
+      this.w = t.w, this.h = this.dimPx.height / this.pxPerUnit;
+    else if (t.h) {
+      this.h = t.h;
+      let s = this.dimPx.height / this.h;
+      this.w = this.dimPx.height / s;
+    } else
+      this.w = this.dimPx.width, this.h = this.dimPx.height;
+    this.minUnits = t.minUnits || { x: -this.w / 2, y: -this.h / 2 };
   }
   resizeBG(t) {
     this.dimPx = this.element.getBoundingClientRect();
@@ -13600,18 +13622,6 @@ class Ho {
   }
   get pxPerUnit() {
     return this.dimPx.width / this.w;
-  }
-  rescale() {
-    const t = this.originalParams;
-    if (t.w)
-      this.w = t.w, this.h = this.dimPx.height / this.pxPerUnit;
-    else if (t.h) {
-      this.h = t.h;
-      let s = this.dimPx.height / this.h;
-      this.w = this.dimPx.height / s;
-    } else
-      this.w = this.dimPx.width, this.h = this.dimPx.height;
-    this.minUnits = t.minUnits || { x: -this.w / 2, y: -this.h / 2 };
   }
   pxToUnits(t) {
     return { x: this.xToUnit(t.x), y: this.yToUnit(t.y) };
