@@ -13560,6 +13560,13 @@ class Ho {
     Q(this, "app");
     this.originalParams = t, this.element = t.element || document.body, this.minUnits = t.minUnits || { x: 0, y: 0 }, this.dimPx = this.element.getBoundingClientRect(), this.img = t.img || "", this.color = t.color || "#111", this.app = new dr({ background: this.color }), this.element.appendChild(this.app.view), this.actors = [], Go = this, this.rescale();
   }
+  getAspectRatio() {
+    const { w: t, h: s } = this.originalParams;
+    if (t && s)
+      return t / s;
+    const i = localStorage[`simhelpers-ratio-${this.img}`];
+    return i || window.innerWidth / window.innerHeight;
+  }
   static async create(t) {
     const s = new Ho(t), i = t.img;
     return i ? new Promise((r) => {
