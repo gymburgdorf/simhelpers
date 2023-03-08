@@ -13594,8 +13594,8 @@ class fp {
   }
   loadBackground() {
     const t = this.img;
-    t && (this.background = be.from(t), this.app.stage.addChild(this.background), this.background.texture.baseTexture.on("loaded", () => {
-      this.resizeBG();
+    t && (this.background = be.from(t), this.app.stage.addChild(this.background), console.log("add bg"), this.background.texture.baseTexture.on("loaded", () => {
+      console.log("bg ready"), this.resizeBG();
     }));
   }
   resizeBG() {
@@ -13613,7 +13613,7 @@ class fp {
     this.app.renderer.render(this.app.stage);
   }
   add(t) {
-    this.actors.push(t), this.app.stage.addChild(t.sprite), this.render();
+    this.actors.push(t), console.log("add actor"), this.app.stage.addChild(t.sprite), this.render();
   }
   xToPx(t) {
     return (t - this.minUnits.x) * this.pxPerUnit;
@@ -13656,7 +13656,7 @@ class pp {
     J(this, "alpha");
     J(this, "sprite");
     this.x = t.x || 0, this.y = t.y || 0, this.img = t.img || "", this.img && (this.sprite = be.from(t.img)), this.sprite.texture.baseTexture.on("loaded", () => {
-      this.resize(t);
+      console.log(1), this.resize(t);
     }), this.world = t.world || Go, this.autorotate = t.autorotate || !0, this.rotation = t.rotation || 0, this.resize(t), this.anchor = t.anchor || { x: 0.5, y: 0.5 }, this.sprite.anchor.set(this.anchor.x, this.anchor.y), this.sprite.alpha = this.alpha = t.alpha || 1, this.wUnits = t.wUnits || 1, this.hUnits = t.hUnits || 1, this.world.add(this), this.world.render();
   }
   resize(t = {}) {
