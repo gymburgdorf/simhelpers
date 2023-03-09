@@ -13579,7 +13579,7 @@ class fp {
   }
   adaptSize() {
     const { w: t, h: s } = this.dimPx();
-    this.app.view.width = t, this.app.view.height = s;
+    this.app.view.width = t, this.app.view.height = s, this.app.resizeTo = this.app.view, this.app.resize();
   }
   dimPx() {
     const { w: t, h: s } = this.maxPx, { w: i, h: r } = this.dimUnits(), o = (t > this.getAspectRatio() * s ? "H" : "W") === "W" ? t / i : s / r;
@@ -13622,7 +13622,7 @@ class fp {
     return this.dimPx().h - (t - this.minUnits.y) * this.pxPerUnit;
   }
   unitsToPx(t) {
-    return { x: this.xToPx(t.x), y: this.yToPx(t.y) };
+    return console.log({ x: this.xToPx(t.x), y: this.yToPx(t.y) }), { x: this.xToPx(t.x), y: this.yToPx(t.y) };
   }
   xToUnit(t) {
     return t / this.pxPerUnit + this.minUnits.x;
@@ -13631,7 +13631,7 @@ class fp {
     return (this.dimPx().h - t) / this.pxPerUnit + this.minUnits.y;
   }
   get pxPerUnit() {
-    return this.dimPx().w / this.w;
+    return this.dimPx().pxPerUnit;
   }
   pxToUnits(t) {
     return { x: this.xToUnit(t.x), y: this.yToUnit(t.y) };
@@ -13656,7 +13656,7 @@ class pp {
     J(this, "alpha");
     J(this, "sprite");
     this.x = t.x || 0, this.y = t.y || 0, this.img = t.img || "", this.img && (this.sprite = be.from(t.img)), this.sprite.texture.baseTexture.on("loaded", () => {
-      console.log(1), this.resize(t);
+      this.resize(t);
     }), this.world = t.world || Go, this.autorotate = t.autorotate || !0, this.rotation = t.rotation || 0, this.resize(t), this.anchor = t.anchor || { x: 0.5, y: 0.5 }, this.sprite.anchor.set(this.anchor.x, this.anchor.y), this.sprite.alpha = this.alpha = t.alpha || 1, this.wUnits = t.wUnits || 1, this.hUnits = t.hUnits || 1, this.world.add(this), this.world.render();
   }
   resize(t = {}) {
