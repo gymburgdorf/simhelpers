@@ -13658,16 +13658,16 @@ class fp {
     let { container: t, step: s, color: i = "#444", onlyX: r = !1, onlyY: n = !1 } = this.coordProps;
     t.removeChildren(), s = s || 10 ** Math.log10(Math.ceil(this.wUnits) - 1);
     var o = this, a = function(l, c) {
-      var u = c == "x" ? o.xToPx(l) : o.yToPx(l), d = new si(l + " " + o.originalParams.unit, { fontFamily: "Tahoma", fontSize: 13, fill: i });
+      var u = c == "x" ? o.xToPx(l) : o.yToPx(l), d = new si(l + " " + o.originalParams.unit, { fontFamily: "Tahoma", fontSize: o.dimPx().w / 40, fill: i });
       d.position.x = c == "x" ? u : h.x, d.position.y = c == "y" ? u : o.dimPx().h - h.y, d.anchor.x = c == "x" ? 0.5 : 0, d.anchor.y = c == "y" ? 0.5 : 1, t.addChild(d);
     }, h = { x: 5, y: 2 };
     if (!r) {
-      const l = o.minUnits.y + o.dimPx().h;
+      const l = o.minUnits.y + o.dimUnits().h;
       for (let c = s * Math.ceil((o.minUnits.y + 0.1 * s) / s); c < l - 0.1 * s; c += s)
         a(c, "y");
     }
     if (!n) {
-      const l = o.minUnits.x + o.dimPx().w;
+      const l = o.minUnits.x + o.dimUnits().w;
       for (let c = s * Math.ceil((o.minUnits.x + 0.1 * s) / s); c < l - 0.1 * s; c += s)
         a(c, "x");
     }
