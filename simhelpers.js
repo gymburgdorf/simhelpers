@@ -13697,6 +13697,14 @@ class Ho {
   draw() {
     this.obj.position = this.world.unitsToPx(this);
   }
+  onClick(t) {
+    this.obj.interactive = !0, this.obj.on("click", (s) => {
+      t(s);
+    });
+  }
+  on(t, s) {
+    this.obj.interactive = !0, this.obj.on(t, s);
+  }
 }
 class _p extends Ho {
   constructor(s) {
