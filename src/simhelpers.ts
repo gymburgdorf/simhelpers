@@ -257,6 +257,16 @@ abstract class Drawable implements IDrawable {
     draw() {
         this.obj.position = this.world.unitsToPx(this);
     }
+    onClick(fn: (e: PIXI.FederatedEvent)=>void) {
+        this.obj.interactive = true
+        this.obj.on("click", (e: PIXI.FederatedPointerEvent)=>{
+            fn(e)        
+        })
+    }
+    on(type: keyof PIXI.DisplayObjectEvents, fn: (...args: unknown[])=>void) {
+        this.obj.interactive = true
+        this.obj.on(type, fn)        
+    }
 }
 
 type ActorParams = {

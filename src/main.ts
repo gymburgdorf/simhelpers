@@ -23,6 +23,7 @@ const flugi = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/flug
 const glider = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png", x: 20, y: 18, wUnits: 14});
 const line = new Line({from: {x: 100, y: 200}, to: {x: 200, y: 100}, color: 0xccddee});
 const circle = new Circle({x: 150, y: 100, r: 30, color: 0x440000});
+circle.onClick((m: Actor)=>console.log(123, m))
 
 setTimeout(()=>{
     line.setColor(0xddeeff)
@@ -35,6 +36,7 @@ flugi.vx = 35;
 flugi.vy = 0;
 glider.vx = 25;
 glider.vy = 0;
+glider.onClick((m: Actor)=>console.log(123, m))
 
 window.addEventListener("keydown", taste);
 
