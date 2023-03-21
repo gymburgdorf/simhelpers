@@ -13546,7 +13546,7 @@ const fp = [".xml", ".fnt"], pp = {
 };
 O.add(pp);
 let Go;
-class gp {
+class mp {
   constructor(t) {
     rt(this, "originalParams");
     rt(this, "element");
@@ -13706,7 +13706,7 @@ class Ho {
     this.obj.interactive = !0, this.obj.on(t, s);
   }
 }
-class _p extends Ho {
+class gp extends Ho {
   constructor(s) {
     const { alpha: i = 1, x: r = 0, y: n = 0, wUnits: o, hUnits: a, rotation: h = 0, anchor: l, world: c, img: u } = s, d = be.from(u);
     super(d, r, n, o, a, h, l, i, c);
@@ -13752,7 +13752,7 @@ class Xo extends Ho {
     this.color = s, this.resetGraphic();
   }
 }
-class xp extends Xo {
+class _p extends Xo {
   constructor(s) {
     const i = "from" in s ? s.from : { x: s.x1, y: s.y1 }, r = "to" in s ? s.to : { x: s.x2, y: s.y2 }, { alpha: n = 1, color: o = 1122867, thickness: a = 3, world: h } = s;
     super({ x: 0, y: 0, wUnits: Math.abs(r.x - i.x), hUnits: Math.abs(r.y - i.y), alpha: n, world: h, color: o });
@@ -13770,7 +13770,7 @@ class xp extends Xo {
     this.obj.position = { x: 0, y: 0 }, this.resetGraphic();
   }
 }
-class vp extends Xo {
+class xp extends Xo {
   constructor(t) {
     const { x: s = 0, y: i = 0, alpha: r = 1, color: n = 11189196, r: o = 1, world: a } = t;
     super({ x: s, y: i, wUnits: 2 * o, hUnits: 2 * o, alpha: r, world: a, color: n }), this.resetGraphic(), this.draw(), this.world.add(this);
@@ -13782,9 +13782,15 @@ class vp extends Xo {
     this.obj.clear(), this.obj.beginFill(this.color), this.obj.drawCircle(0, 0, this.world.getPxPerUnit() * this.wUnits / 2), this.obj.endFill();
   }
 }
+window.simhelpers = {
+  World: mp,
+  Actor: gp,
+  Line: _p,
+  Circle: xp
+};
 export {
-  _p as Actor,
-  vp as Circle,
-  xp as Line,
-  gp as World
+  gp as Actor,
+  xp as Circle,
+  _p as Line,
+  mp as World
 };
