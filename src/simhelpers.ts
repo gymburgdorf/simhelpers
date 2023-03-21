@@ -157,10 +157,10 @@ export class World {
     unitsToPx(units: TCoord) {
         return { x: this.xToPx(units.x), y: this.yToPx(units.y) }
     }
-    xToUnits(xPx: number) {
+    xToUnit(xPx: number) {
         return xPx / this.getPxPerUnit() + this.minUnits.x
     }
-    yToUnits(yPx: number) {
+    yToUnit(yPx: number) {
         return (this.dimPx().h - yPx) / this.getPxPerUnit() + this.minUnits.y
     }
     getPxPerUnit() {
