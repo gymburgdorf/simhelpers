@@ -157,17 +157,17 @@ export class World {
     unitsToPx(units: TCoord) {
         return { x: this.xToPx(units.x), y: this.yToPx(units.y) }
     }
-    xToUnit(xPx: number) {
+    xToUnits(xPx: number) {
         return xPx / this.getPxPerUnit() + this.minUnits.x
     }
-    yToUnit(yPx: number) {
+    yToUnits(yPx: number) {
         return (this.dimPx().h - yPx) / this.getPxPerUnit() + this.minUnits.y
     }
     getPxPerUnit() {
         return this.dimPx().pxPerUnit
     }
     pxToUnits(px: TCoord) {
-        return { x: this.xToUnit(px.x), y: this.yToUnit(px.y) }
+        return { x: this.xToUnits(px.x), y: this.yToUnits(px.y) }
     }
     update() {
         this.actors.forEach(a => a.draw())
