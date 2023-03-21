@@ -442,4 +442,8 @@ export class Circle extends GraphicsSprite {
 //     this.world.render();
 //     return this;
 //   }
-  
+
+//@ts-ignore export to global scope for non-module use
+window.simhelpers = {
+    World, Actor, Line, Circle
+}
