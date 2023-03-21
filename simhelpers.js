@@ -13643,17 +13643,17 @@ class mp {
   unitsToPx(t) {
     return { x: this.xToPx(t.x), y: this.yToPx(t.y) };
   }
-  xToUnit(t) {
+  xToUnits(t) {
     return t / this.getPxPerUnit() + this.minUnits.x;
   }
-  yToUnit(t) {
+  yToUnits(t) {
     return (this.dimPx().h - t) / this.getPxPerUnit() + this.minUnits.y;
   }
   getPxPerUnit() {
     return this.dimPx().pxPerUnit;
   }
   pxToUnits(t) {
-    return { x: this.xToUnit(t.x), y: this.yToUnit(t.y) };
+    return { x: this.xToUnits(t.x), y: this.yToUnits(t.y) };
   }
   update() {
     this.actors.forEach((t) => t.draw()), this.render();
