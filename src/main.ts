@@ -9,6 +9,7 @@ const world = new World({
 });
 world.createAxis({step: 50, color: "#fff"})
 
+
 // const world2 = await World.create({
 //     element: document.querySelector(".app2"),
 //     w: 100,
@@ -44,15 +45,9 @@ function taste(event: { key: string; }) {
 	console.log("Eine Taste wurde gedrückt:", event.key)
 } 
 
-function loop() {
+function loop(dt: number) {
 	flugi.x += flugi.vx * dt
 	glider.x += glider.vx * dt
-	world.update();
 }
 
-function raf() {
-    loop()
-    requestAnimationFrame(raf)
-}
-
-requestAnimationFrame(raf)
+world.addTicker(loop)

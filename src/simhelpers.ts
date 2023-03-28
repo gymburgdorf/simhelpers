@@ -173,6 +173,12 @@ export class World {
         this.actors.forEach(a => a.draw())
         this.render()
     }
+    addTicker(fn: (dt: number)=>void) {
+        this.app.ticker.add((dtframes) => {
+            fn(dtframes / 60)
+            this.update()
+        })
+    }
     private updateAxis() {
         if(!this.coordProps) return
         let {container, step, color = "#444", onlyX = false, onlyY = false} = this.coordProps
