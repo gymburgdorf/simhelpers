@@ -13658,6 +13658,11 @@ class mp {
   update() {
     this.actors.forEach((t) => t.draw()), this.render();
   }
+  addTicker(t) {
+    this.app.ticker.add((s) => {
+      t(s / 60), this.update();
+    });
+  }
   updateAxis() {
     if (!this.coordProps)
       return;
