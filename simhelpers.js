@@ -13586,26 +13586,26 @@ class mp {
       i.onResize();
   }
   dimPx() {
-    const { w: t, h: s } = this.maxPx, { w: i, h: r } = this.dimUnits(), o = (t > this.getAspectRatio() * s ? "H" : "W") === "W" ? t / i : s / r;
+    const { w: t, h: s } = this.maxPx, { w: i, h: r } = this.dim(), o = (t > this.getAspectRatio() * s ? "H" : "W") === "W" ? t / i : s / r;
     return { w: i * o, h: r * o, pxPerUnit: o };
   }
-  dimUnits() {
+  dim() {
     const { w: t, h: s } = this.originalParams;
     return {
       w: t || s && s * this.getAspectRatio() || this.maxPx.w,
       h: s || t && t / this.getAspectRatio() || this.maxPx.h
     };
   }
-  get wUnits() {
-    return this.dimUnits().w;
+  get w() {
+    return this.dim().w;
   }
-  get hUnits() {
-    return this.dimUnits().h;
+  get h() {
+    return this.dim().h;
   }
-  set wUnits(t) {
+  set w(t) {
     this.originalParams.w = t, this.adaptSize();
   }
-  set hUnits(t) {
+  set h(t) {
     this.originalParams.h = t, this.adaptSize();
   }
   loadBackground() {
@@ -13667,18 +13667,18 @@ class mp {
     if (!this.coordProps)
       return;
     let { container: t, step: s, color: i = "#444", onlyX: r = !1, onlyY: n = !1 } = this.coordProps;
-    t.removeChildren(), s = s || 10 ** Math.log10(Math.ceil(this.wUnits) - 1);
+    t.removeChildren(), s = s || 10 ** Math.log10(Math.ceil(this.w) - 1);
     var o = this, a = function(l, c) {
       var u = c == "x" ? o.xToPx(l) : o.yToPx(l), d = new si(l + " " + o.originalParams.unit, { fontFamily: "Tahoma", fontSize: o.dimPx().w / 40, fill: i });
       d.position.x = c == "x" ? u : h.x, d.position.y = c == "y" ? u : o.dimPx().h - h.y, d.anchor.x = c == "x" ? 0.5 : 0, d.anchor.y = c == "y" ? 0.5 : 1, t.addChild(d);
     }, h = { x: 5, y: 2 };
     if (!r) {
-      const l = o.minUnits.y + o.dimUnits().h;
+      const l = o.minUnits.y + o.dim().h;
       for (let c = s * Math.ceil((o.minUnits.y + 0.1 * s) / s); c < l - 0.1 * s; c += s)
         a(c, "y");
     }
     if (!n) {
-      const l = o.minUnits.x + o.dimUnits().w;
+      const l = o.minUnits.x + o.dim().w;
       for (let c = s * Math.ceil((o.minUnits.x + 0.1 * s) / s); c < l - 0.1 * s; c += s)
         a(c, "x");
     }
@@ -13692,9 +13692,7 @@ class mp {
 class Ho {
   constructor(t, s, i, r, n, o = 0, a = { x: 0.5, y: 0.5 }, h = 1, l = Go) {
     rt(this, "forceUnits");
-    this.obj = t, this.x = s, this.y = i, this.wUnits = r, this.hUnits = n, this.rotation = o, this.anchor = a, this.alpha = h, this.world = l;
-    const c = r, u = n;
-    this.forceUnits = { ...c && { w: c }, ...u && { h: u } }, this.obj.alpha = this.alpha;
+    this.obj = t, this.x = s, this.y = i, this.w = r, this.h = n, this.rotation = o, this.anchor = a, this.alpha = h, this.world = l, this.forceUnits = { ...r && { w: r }, ...n && { h: n } }, this.obj.alpha = this.alpha;
   }
   destroy() {
     this.world.remove(this);
@@ -13744,7 +13742,7 @@ class gp extends Ho {
 }
 class Xo extends Ho {
   constructor(s) {
-    const { x: i = 0, y: r = 0, wUnits: n, hUnits: o, alpha: a, anchor: h, rotation: l, world: c, color: u } = s, d = new as();
+    const { x: i = 0, y: r = 0, w: n, h: o, alpha: a, anchor: h, rotation: l, world: c, color: u } = s, d = new as();
     super(d, i, r, n, o, a, h, l, c);
     rt(this, "obj");
     rt(this, "color");
@@ -13760,7 +13758,7 @@ class Xo extends Ho {
 class _p extends Xo {
   constructor(s) {
     const i = "from" in s ? s.from : { x: s.x1, y: s.y1 }, r = "to" in s ? s.to : { x: s.x2, y: s.y2 }, { alpha: n = 1, color: o = 1122867, thickness: a = 3, world: h } = s;
-    super({ x: 0, y: 0, wUnits: Math.abs(r.x - i.x), hUnits: Math.abs(r.y - i.y), alpha: n, world: h, color: o });
+    super({ x: 0, y: 0, w: Math.abs(r.x - i.x), h: Math.abs(r.y - i.y), alpha: n, world: h, color: o });
     rt(this, "thickness");
     rt(this, "from");
     rt(this, "to");
@@ -13778,13 +13776,13 @@ class _p extends Xo {
 class xp extends Xo {
   constructor(t) {
     const { x: s = 0, y: i = 0, alpha: r = 1, color: n = 11189196, r: o = 1, world: a } = t;
-    super({ x: s, y: i, wUnits: 2 * o, hUnits: 2 * o, alpha: r, world: a, color: n }), this.resetGraphic(), this.draw(), this.world.add(this);
+    super({ x: s, y: i, w: 2 * o, h: 2 * o, alpha: r, world: a, color: n }), this.resetGraphic(), this.draw(), this.world.add(this);
   }
   setRadius(t) {
-    this.wUnits = this.hUnits = 2 * t, this.resetGraphic();
+    this.w = this.h = 2 * t, this.resetGraphic();
   }
   resetGraphic() {
-    this.obj.clear(), this.obj.beginFill(this.color), this.obj.drawCircle(0, 0, this.world.getPxPerUnit() * this.wUnits / 2), this.obj.endFill();
+    this.obj.clear(), this.obj.beginFill(this.color), this.obj.drawCircle(0, 0, this.world.getPxPerUnit() * this.w / 2), this.obj.endFill();
   }
 }
 window.simhelpers = {
