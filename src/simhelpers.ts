@@ -15,7 +15,12 @@ type Background = {img?: string, color?: Color}
 type Dimension = {unit?: string, w?: number, h?: number, minUnits?: TCoord, maxPx?: {w: number, h: number}}
 type WorldParams = {element?: Element | null} & Background & Dimension
 type CoordProps = {step: number, color: Color, onlyX: boolean, onlyY: boolean}
-let latestWorld: World 
+let latestWorld: World
+
+function getImageUrl(img: string) {
+    if(img.startsWith("simhelpers")) return `https://gymburgdorf.github.io/${img}`
+    return img
+}
 
 export class World {
     readonly originalParams: WorldParams
@@ -108,7 +113,7 @@ export class World {
     loadBackground() {
         const img = this.img
         if (img) {
-            this.background = PIXI.Sprite.from(img);
+            this.background = PIXI.Sprite.from(getImageUrl(img));
             this.app.stage.addChild(this.background);
             console.log("add bg");
             this.background.texture.baseTexture.on("loaded", () => {
@@ -301,7 +306,7 @@ export class Actor extends Drawable {
     obj: PIXI.Sprite
     constructor(params: ActorParams) {
         const {alpha = 1, x = 0, y = 0, wUnits, hUnits, rotation = 0, anchor, world, img} = params
-        const obj = PIXI.Sprite.from(img)
+        const obj = PIXI.Sprite.from(getImageUrl(img))
         super(obj, x, y, wUnits, hUnits, rotation, anchor, alpha, world)
         this.obj = obj
         this.img = img
