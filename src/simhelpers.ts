@@ -35,6 +35,7 @@ export class World {
         this.maxPx = params.maxPx || this.getAutoSize()
         // todo default coords middle
         // todo image cover
+        
         this.minUnits = params.minUnits || {x: 0, y: 0}
         this.img = params.img || ""
         this.color = params.color || "#111";
@@ -67,9 +68,9 @@ export class World {
         return `simhelpers-ratio-${this.img}`
     }
     adaptSize() {
-        const {w, h} = this.dimPx()
-        this.app.view.width = w
-        this.app.view.height = h
+        const {w: wPx, h: hPx} = this.dimPx()
+        this.app.view.width = wPx
+        this.app.view.height = hPx
         this.app.resizeTo = this.app.view as HTMLCanvasElement
         this.app.resize()
         for(let actor of this.actors) {
@@ -78,29 +79,29 @@ export class World {
     }
     dimPx() {
         const {w: wMax, h: hMax} = this.maxPx
-        const {w: wUnit, h: hUnit} = this.dimUnits()
+        const {w, h} = this.dim()
         const limit = wMax > this.getAspectRatio() * hMax ? "H" : "W"
-        const pxPerUnit = limit === "W" ? wMax / wUnit : hMax / hUnit
-        return {w: wUnit * pxPerUnit, h: hUnit * pxPerUnit, pxPerUnit}
+        const pxPerUnit = limit === "W" ? wMax / w : hMax / h
+        return {w: w * pxPerUnit, h: h * pxPerUnit, pxPerUnit}
     }
-    dimUnits() {
+    dim() {
         const {w, h} = this.originalParams
         return {
             w: w || (h && h * this.getAspectRatio()) || this.maxPx.w,
             h: h || (w && w / this.getAspectRatio()) || this.maxPx.h,
         }
     }
-    get wUnits() {
-        return this.dimUnits().w
+    get w() {
+        return this.dim().w
     }
-    get hUnits() {
-        return this.dimUnits().h
+    get h() {
+        return this.dim().h
     }
-    set wUnits(w: number) {
+    set w(w: number) {
         this.originalParams.w = w
         this.adaptSize()
     }
-    set hUnits(h: number) {
+    set h(h: number) {
         this.originalParams.h = h
         this.adaptSize()
     }
@@ -183,7 +184,7 @@ export class World {
         if(!this.coordProps) return
         let {container, step, color = "#444", onlyX = false, onlyY = false} = this.coordProps
         container.removeChildren()
-        step = step || 10**Math.log10(Math.ceil(this.wUnits) - 1)
+        step = step || 10**Math.log10(Math.ceil(this.w) - 1)
         var world = this;
         //  var koordinatenachse = new PIXI.Graphics();
         //  koordinatenachse.lineStyle(4, 0xFFFFFF, 1);
@@ -202,11 +203,11 @@ export class World {
         var offset = { x: 5, y: 2 } //px von Rand;
 
         if (!onlyX) {
-            const maxY = world.minUnits.y + world.dimUnits().h
+            const maxY = world.minUnits.y + world.dim().h
             for (let i = step * Math.ceil((world.minUnits.y + 0.1 * step) / step); i < maxY - 0.1 * step; i += step) { createLabel(i, "y"); }
         }
         if (!onlyY) {
-            const maxX = world.minUnits.x + world.dimUnits().w
+            const maxX = world.minUnits.x + world.dim().w
             for (let i = step * Math.ceil((world.minUnits.x + 0.1 * step) / step); i < maxX - 0.1 * step; i += step) { createLabel(i, "x"); }
         }
         this.render();
@@ -230,8 +231,8 @@ interface IDrawable {
     obj: PIXI.DisplayObject,
     x: number,
     y: number,
-    wUnits?: number,
-    hUnits?: number,
+    w?: number,
+    h?: number,
     rotation: number,
     anchor: TCoord,
     alpha: number,
@@ -244,15 +245,13 @@ abstract class Drawable implements IDrawable {
         public obj: PIXI.DisplayObject,
         public x: number,
         public y: number,
-        public wUnits?: number,
-        public hUnits?: number,
+        public w?: number,
+        public h?: number,
         public rotation: number = 0,
         public anchor: TCoord = { x: 0.5, y: 0.5 },
         public alpha: number = 1,
         public world: World = latestWorld,
     ) {
-        const w = wUnits
-        const h = hUnits
         this.forceUnits = {...w && {w}, ...h && {h}}
         this.obj.alpha = this.alpha
     }
@@ -343,7 +342,7 @@ abstract class GraphicsSprite extends Drawable {
     obj: PIXI.Graphics
     color: number
     constructor(props: Partial<IDrawable> & {color: number}) {
-        const {x = 0, y = 0, wUnits, hUnits, alpha, anchor, rotation, world, color} = props
+        const {x = 0, y = 0, w: wUnits, h: hUnits, alpha, anchor, rotation, world, color} = props
         const obj = new PIXI.Graphics()
         super(obj, x, y, wUnits, hUnits, alpha, anchor, rotation, world)
         this.obj = obj
@@ -376,7 +375,7 @@ export class Line extends GraphicsSprite {
         const {alpha = 1, color = 0x112233, thickness = 3, world} = params
         const x = 0 //(from.x + to.x) / 2
         const y = 0 //(from.y + to.y) / 2
-        super({x, y, wUnits: Math.abs(to.x - from.x), hUnits: Math.abs(to.y - from.y), alpha, world, color})
+        super({x, y, w: Math.abs(to.x - from.x), h: Math.abs(to.y - from.y), alpha, world, color})
         this.thickness = params.thickness || 3
         this.from = from
         this.to = to
@@ -407,19 +406,19 @@ type CircleParams = TCoord & {
 export class Circle extends GraphicsSprite {
     constructor(params: CircleParams) {
         const {x = 0, y = 0, alpha = 1, color = 0xaabbcc, r = 1, world} = params
-        super({x, y, wUnits: 2 * r, hUnits: 2 * r, alpha, world, color})
+        super({x, y, w: 2 * r, h: 2 * r, alpha, world, color})
         this.resetGraphic()
         this.draw()
         this.world.add(this)
     }
     setRadius(value: number) {
-        this.wUnits = this.hUnits = 2 * value
+        this.w = this.h = 2 * value
         this.resetGraphic()
     }
     resetGraphic() {
         this.obj.clear()
         this.obj.beginFill(this.color);
-        this.obj.drawCircle(0, 0, this.world.getPxPerUnit() * this.wUnits! / 2);
+        this.obj.drawCircle(0, 0, this.world.getPxPerUnit() * this.w! / 2);
         this.obj.endFill();
     }
 }
