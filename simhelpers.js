@@ -13703,6 +13703,9 @@ class Xo {
   draw() {
     this.obj.rotation = -this.rotation, this.obj.position = this.world.unitsToPx(this);
   }
+  setAnchor(t) {
+    this.anchor = t, this.obj.pivot.set(t.x, t.y);
+  }
   onClick(t) {
     this.obj.interactive = !0, this.obj.on("click", (s) => {
       t(s);
