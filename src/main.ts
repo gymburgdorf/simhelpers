@@ -57,10 +57,14 @@ let track = new Actor({
   autorotate: false
 })
 
+let a = 0
 function loop(dt: number) {
 	flugi.x += flugi.vx * dt
 	flugi2.x += flugi2.vx * dt
 	glider.rotation += 0.1
+    a += dt
+    track.setAnchor({x: 10*Math.sin(a), y: 60*Math.cos(a)})
+    track.rotation += 0.01
  }
 
 world.addTicker(loop)
