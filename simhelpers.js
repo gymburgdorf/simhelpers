@@ -13701,7 +13701,7 @@ class Xo {
     this.world.remove(this);
   }
   draw() {
-    this.obj.position = this.world.unitsToPx(this);
+    this.obj.rotation = -this.rotation, this.obj.position = this.world.unitsToPx(this);
   }
   onClick(t) {
     this.obj.interactive = !0, this.obj.on("click", (s) => {
