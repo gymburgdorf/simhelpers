@@ -265,6 +265,7 @@ abstract class Drawable implements IDrawable {
     }
     abstract onResize(): void
     draw() {
+        this.obj.rotation = - this.rotation
         this.obj.position = this.world.unitsToPx(this);
     }
     onClick(fn: (e: PIXI.FederatedEvent)=>void) {
