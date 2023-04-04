@@ -268,6 +268,10 @@ abstract class Drawable implements IDrawable {
         this.obj.rotation = - this.rotation
         this.obj.position = this.world.unitsToPx(this);
     }
+    setAnchor(coords: TCoord) {
+        this.anchor = coords
+        this.obj.pivot.set(coords.x, coords.y)
+    }
     onClick(fn: (e: PIXI.FederatedEvent)=>void) {
         this.obj.interactive = true
         this.obj.on("click", (e: PIXI.FederatedPointerEvent)=>{
