@@ -13714,7 +13714,7 @@ class Xo {
 }
 class _p extends Xo {
   constructor(s) {
-    const { alpha: i = 1, x: r = 0, y: n = 0, wUnits: o, hUnits: a, rotation: h = 0, anchor: l, world: c, img: u } = s, d = be.from(Ho(u));
+    const { alpha: i = 1, x: r = 0, y: n = 0, wUnits: o, hUnits: a, rotation: h = 0, anchor: l, world: c, img: u } = s, d = be.from(Ho(u), { resolution: 1e3 });
     super(d, r, n, o, a, h, l, i, c);
     rt(this, "vx", 0);
     rt(this, "vy", 0);
