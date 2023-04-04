@@ -306,7 +306,7 @@ export class Actor extends Drawable {
     obj: PIXI.Sprite
     constructor(params: ActorParams) {
         const {alpha = 1, x = 0, y = 0, wUnits, hUnits, rotation = 0, anchor, world, img} = params
-        const obj = PIXI.Sprite.from(getImageUrl(img))
+        const obj = PIXI.Sprite.from(getImageUrl(img), {resolution: 1000})
         super(obj, x, y, wUnits, hUnits, rotation, anchor, alpha, world)
         this.obj = obj
         this.img = img
