@@ -22,9 +22,6 @@ function getImageUrl(img: string) {
     return img
 }
 
-console.log("Simhelpers v2");
-
-
 export class World {
     readonly originalParams: WorldParams
     readonly element: HTMLElement
@@ -346,8 +343,6 @@ export class Actor extends Drawable {
     }
     draw() {
         super.draw()
-        console.log(this.autorotate);
-        
         if (this.autorotate) { this.obj.rotation = Math.atan2(-this.vy, this.vx); }
     }
 }
