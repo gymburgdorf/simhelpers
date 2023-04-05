@@ -22,6 +22,9 @@ function getImageUrl(img: string) {
     return img
 }
 
+console.log("Simhelpers v2");
+
+
 export class World {
     readonly originalParams: WorldParams
     readonly element: HTMLElement
