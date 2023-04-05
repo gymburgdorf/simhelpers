@@ -13549,6 +13549,7 @@ let Go;
 function Ho(e) {
   return e.startsWith("simhelpers") ? `https://gymburgdorf.github.io/${e}` : e;
 }
+console.log("Simhelpers v2");
 class gp {
   constructor(t) {
     rt(this, "originalParams");
