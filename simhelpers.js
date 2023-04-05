@@ -13734,7 +13734,7 @@ class _p extends Xo {
     rt(this, "obj");
     this.obj = d, this.img = u, this.obj.texture.baseTexture.on("loaded", () => {
       this.onResize();
-    }), this.autorotate = s.autorotate || !0, this.onResize(), this.anchor = s.anchor || { x: 0.5, y: 0.5 }, this.obj.anchor.set(this.anchor.x, this.anchor.y), this.world.add(this);
+    }), this.autorotate = s.autorotate ?? !0, this.onResize(), this.anchor = s.anchor || { x: 0.5, y: 0.5 }, this.obj.anchor.set(this.anchor.x, this.anchor.y), this.world.add(this);
   }
   onResize() {
     const { w: s, h: i } = this.forceUnits, { width: r, height: n } = this.obj.texture.baseTexture;
@@ -13744,7 +13744,7 @@ class _p extends Xo {
     this.forceUnits = s, this.onResize();
   }
   draw() {
-    this.obj.position = this.world.unitsToPx(this), this.obj.rotation = -this.rotation || 0, this.autorotate && (this.obj.rotation = Math.atan2(-this.vy, this.vx));
+    super.draw(), console.log(this.autorotate), this.autorotate && (this.obj.rotation = Math.atan2(-this.vy, this.vx));
   }
 }
 class zo extends Xo {
