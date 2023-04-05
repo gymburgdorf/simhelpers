@@ -13549,7 +13549,6 @@ let Go;
 function Ho(e) {
   return e.startsWith("simhelpers") ? `https://gymburgdorf.github.io/${e}` : e;
 }
-console.log("Simhelpers v2");
 class gp {
   constructor(t) {
     rt(this, "originalParams");
@@ -13744,7 +13743,7 @@ class _p extends Xo {
     this.forceUnits = s, this.onResize();
   }
   draw() {
-    super.draw(), console.log(this.autorotate), this.autorotate && (this.obj.rotation = Math.atan2(-this.vy, this.vx));
+    super.draw(), this.autorotate && (this.obj.rotation = Math.atan2(-this.vy, this.vx));
   }
 }
 class zo extends Xo {
