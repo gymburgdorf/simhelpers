@@ -22,7 +22,7 @@ world.createAxis({step: 50, color: "#fff"})
 
 const flugi = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/flugi50.png", x: -40, y: 60, wUnits: 14});
 const flugi2 = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png", x: -40, y: 60, wUnits: 14});
-const glider = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png", x: 100, y: 100, wUnits: 100, autorotate: false});
+
 const line = new Line({from: {x: 100, y: 200}, to: {x: 200, y: 100}, color: 0xccddee});
 const circle = new Circle({x: 150, y: 100, r: 30, color: 0x440000});
 circle.onClick((m)=>console.log(123, m))
@@ -38,9 +38,6 @@ flugi.vx = 35;
 flugi.vy = 0;
 flugi2.vx = 35;
 flugi2.vy = 0;
-glider.vx = 25;
-glider.vy = 0;
-glider.onClick((m)=>console.log(123, m))
 
 window.addEventListener("keydown", taste);
 
@@ -48,24 +45,35 @@ function taste(event: { key: string; }) {
 	console.log("Eine Taste wurde gedrückt:", event.key)
 } 
 
-
 let track = new Actor({
-  img: `https://upload.wikimedia.org/wikipedia/commons/6/63/Irungattukottai_Race_Track_map_--_Full_track.svg`,
+  img: `https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png`,
   x: 50,
   y: 20,
   wUnits: 5000,
   autorotate: false
 })
+track.vx = 0.11
+track.vy = 0.11
+
+
+let glider = new Actor({
+    img: "https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png",
+    x: 100,
+    y: 100,
+    wUnits: 120,
+    autorotate: false
+});
 
 let a = 0
 function loop(dt: number) {
 	flugi.x += flugi.vx * dt
 	flugi2.x += flugi2.vx * dt
-	glider.rotation += 0.1
+    glider.setAnchor({x: 0.5+0.000001*dt, y: 0.5})
+	glider.rotation += 0.01
     a += dt
-    track.setAnchor({x: 10*Math.sin(a), y: 60*Math.cos(a)})
+    //track.setAnchor({x: 10*Math.sin(a), y: 60*Math.cos(a)})
     track.rotation += 0.01
  }
 
- 
+
 world.addTicker(loop)

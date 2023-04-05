@@ -321,7 +321,7 @@ export class Actor extends Drawable {
         this.obj.texture.baseTexture.on("loaded", () => {            
             this.onResize()
         })
-        this.autorotate = params.autorotate || true;
+        this.autorotate = params.autorotate ?? true;
         this.onResize()
         this.anchor = params.anchor || { x: 0.5, y: 0.5 };
         this.obj.anchor.set(this.anchor.x, this.anchor.y)
@@ -345,8 +345,9 @@ export class Actor extends Drawable {
         this.onResize()
     }
     draw() {
-        this.obj.position = this.world.unitsToPx(this);
-        this.obj.rotation = -this.rotation || 0;
+        super.draw()
+        console.log(this.autorotate);
+        
         if (this.autorotate) { this.obj.rotation = Math.atan2(-this.vy, this.vx); }
     }
 }
