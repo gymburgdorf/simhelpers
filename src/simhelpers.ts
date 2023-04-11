@@ -80,6 +80,7 @@ export class World {
         const {w: wPx, h: hPx} = this.dimPx()
         this.app.view.width = wPx
         this.app.view.height = hPx
+        this.app.renderer.resize(wPx, hPx);
         this.unitContainer.scale.set(wPx/this.w, -hPx/this.h)
         this.unitContainer.position.y = hPx;
     }
