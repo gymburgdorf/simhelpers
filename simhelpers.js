@@ -13585,7 +13585,7 @@ class gp {
   }
   adaptSize() {
     const { w: t, h: s } = this.dimPx();
-    this.app.view.width = t, this.app.view.height = s, this.unitContainer.scale.set(t / this.w, -s / this.h), this.unitContainer.position.y = s;
+    this.app.view.width = t, this.app.view.height = s, this.app.renderer.resize(t, s), this.unitContainer.scale.set(t / this.w, -s / this.h), this.unitContainer.position.y = s;
   }
   dimPx() {
     const { w: t, h: s } = this.maxPx, { w: i, h: r } = this.dim(), o = (t > this.getAspectRatio() * s ? "H" : "W") === "W" ? t / i : s / r;
