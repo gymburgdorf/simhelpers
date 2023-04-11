@@ -24,8 +24,9 @@ const flugi = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/flug
 const flugi2 = new Actor({img: "https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png", x: -40, y: 60, wUnits: 14});
 
 const line = new Line({from: {x: 100, y: 200}, to: {x: 200, y: 100}, color: 0xccddee});
+const line2 = new Line({from: {x: 100, y: 100}, to: {x: 200, y: 200}, color: 0xffddcc});
 const circle = new Circle({x: 150, y: 100, r: 30, color: 0x440000});
-circle.onClick((m)=>console.log(123, m))
+line.onClick((m)=>console.log(123, m))
 
 setTimeout(()=>{
     line.setColor(0xddeeff)
@@ -46,10 +47,10 @@ function taste(event: { key: string; }) {
 } 
 
 let track = new Actor({
-  img: `https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png`,
+  img: `https://gymburgdorf.github.io/simhelpers/img/Segelflieger-100.png`,
   x: 50,
   y: 20,
-  wUnits: 5000,
+  wUnits: 50,
   autorotate: false
 })
 track.vx = 0.11
@@ -57,10 +58,10 @@ track.vy = 0.11
 
 
 let glider = new Actor({
-    img: "https://gymburgdorf.github.io/simhelpers/img/Segelflieger50.png",
+    img: "img/Track.svg",
     x: 100,
     y: 100,
-    wUnits: 120,
+    wUnits: 50,
     autorotate: false
 });
 
@@ -68,9 +69,9 @@ let a = 0
 function loop(dt: number) {
 	flugi.x += flugi.vx * dt
 	flugi2.x += flugi2.vx * dt
-    glider.setAnchor({x: 0.5+0.000001*dt, y: 0.5})
+    glider.setAnchor({x: 0.674, y: 0.5})
 	glider.rotation += 0.01
-    a += dt
+    t += dt
     //track.setAnchor({x: 10*Math.sin(a), y: 60*Math.cos(a)})
     track.rotation += 0.01
  }

@@ -32,6 +32,7 @@ export class World {
     private background?: PIXI.Sprite
     actors: Drawable[]
     readonly app: PIXI.Application
+    private readonly unitContainer: PIXI.Container
     private coordProps?: {container: PIXI.Container} & Partial<CoordProps>
 
     constructor(params: WorldParams) {
@@ -40,18 +41,21 @@ export class World {
         this.maxPx = params.maxPx || this.getAutoSize()
         // todo default coords middle
         // todo image cover
-        
         this.minUnits = params.minUnits || {x: 0, y: 0}
         this.img = params.img || ""
         this.color = params.color || "#111";
+        //todo color
         this.app = new PIXI.Application({
             background: this.color,
             antialias: true,
         });
+        this.unitContainer = new PIXI.Container();
+        this.app.stage.addChild(this.unitContainer)
         this.element.appendChild(this.app.view as unknown as HTMLElement)
         this.actors = []
         this.adaptSize()
         this.loadBackground()
+        this.onResizeContainer()
         latestWorld = this
         window.addEventListener("resize", ()=>this.onResizeContainer())       
         //add resizeObserver
@@ -76,15 +80,12 @@ export class World {
         const {w: wPx, h: hPx} = this.dimPx()
         this.app.view.width = wPx
         this.app.view.height = hPx
-        this.app.resizeTo = this.app.view as HTMLCanvasElement
-        this.app.resize()
-        for(let actor of this.actors) {
-            actor.onResize()
-        }
+        this.unitContainer.scale.set(wPx/this.w, -hPx/this.h)
+        this.unitContainer.position.y = hPx;
     }
     dimPx() {
         const {w: wMax, h: hMax} = this.maxPx
-        const {w, h} = this.dim()
+        const {w, h} = this.dim()        
         const limit = wMax > this.getAspectRatio() * hMax ? "H" : "W"
         const pxPerUnit = limit === "W" ? wMax / w : hMax / h
         return {w: w * pxPerUnit, h: h * pxPerUnit, pxPerUnit}
@@ -114,67 +115,71 @@ export class World {
         const img = this.img
         if (img) {
             this.background = PIXI.Sprite.from(getImageUrl(img));
-            this.app.stage.addChild(this.background);
-            console.log("add bg");
+            this.unitContainer.addChild(this.background);
+            this.background.texture.rotate = 8
+            this.adaptBgSize() 
             this.background.texture.baseTexture.on("loaded", () => {
                 console.log("bg ready");
-                this.resizeBG()
+                this.onloadBackground()
             })
         }
     }
-    resizeBG() {
-        if(!this.background) return
+    onloadBackground() {
+        if(!this.background?.texture?.valid) return
         const {width, height} = this.background.texture.baseTexture
         const imgRatio = width / height
         if(!this.getForcedRatio()) {
             localStorage[this.getAspectKey()] = imgRatio
         }      
         this.adaptSize()
-        const {w, h} = this.dimPx()
-        this.background.scale.set(w/width)
-        this.render()
+        this.adaptBgSize() 
+    }
+    adaptBgSize() {
+        if(!this.background) return
+        this.background.width = this.w
+        this.background.height = this.h
     }
     onResizeContainer() {
         if(!this.originalParams.maxPx) {
             this.maxPx = this.getAutoSize()
         }
         this.updateAxis()
-        this.resizeBG()
+        this.adaptSize()
     }
     render() {
         this.app.renderer.render(this.app.stage)
     }
     add(drawable: Drawable) {
         this.actors.push(drawable) 
-        this.app.stage.addChild(drawable.obj)
+        this.unitContainer.addChild(drawable.obj)
         this.render()
     }
     remove(drawable: Drawable) {
         this.actors.splice(this.actors.indexOf(drawable), 1);
-        this.app.stage.removeChild(drawable.obj)
+        this.unitContainer.removeChild(drawable.obj)
         this.render()
     }
-    xToPx(xUnit: number) {
-        return (xUnit - this.minUnits.x) * this.getPxPerUnit()
-    }
-    yToPx(yUnit: number) {
-        return this.dimPx().h - (yUnit - this.minUnits.y) * this.getPxPerUnit()
-    }
-    unitsToPx(units: TCoord) {
-        return { x: this.xToPx(units.x), y: this.yToPx(units.y) }
-    }
-    xToUnits(xPx: number) {
-        return xPx / this.getPxPerUnit() + this.minUnits.x
-    }
-    yToUnits(yPx: number) {
-        return (this.dimPx().h - yPx) / this.getPxPerUnit() + this.minUnits.y
-    }
+    // xToPx(xUnit: number) {
+    //     return (xUnit - this.minUnits.x) * this.getPxPerUnit()
+    // }
+    // yToPx(yUnit: number) {
+    //     return this.dimPx().h - (yUnit - this.minUnits.y) * this.getPxPerUnit()
+    // }
+    // unitsToPx(units: TCoord) {
+    //     return { x: this.xToPx(units.x), y: this.yToPx(units.y) }
+    // }
+    // xToUnits(xPx: number) {
+    //     return xPx / this.getPxPerUnit() + this.minUnits.x
+    // }
+    // yToUnits(yPx: number) {
+    //     return (this.dimPx().h - yPx) / this.getPxPerUnit() + this.minUnits.y
+    // }
     getPxPerUnit() {
         return this.dimPx().pxPerUnit
     }
-    pxToUnits(px: TCoord) {
-        return { x: this.xToUnits(px.x), y: this.yToUnits(px.y) }
-    }
+    // pxToUnits(px: TCoord) {
+    //     return { x: this.xToUnits(px.x), y: this.yToUnits(px.y) }
+    // }
     update() {
         this.actors.forEach(a => a.draw())
         this.render()
@@ -189,6 +194,7 @@ export class World {
         if(!this.coordProps) return
         let {container, step, color = "#444", onlyX = false, onlyY = false} = this.coordProps
         container.removeChildren()
+
         step = step || 10**Math.log10(Math.ceil(this.w) - 1)
         var world = this;
         //  var koordinatenachse = new PIXI.Graphics();
@@ -196,16 +202,18 @@ export class World {
         //  koordinatenachse.moveTo(0, maxHeight);
         //  koordinatenachse.lineTo(0, 0);
         //  stage.addChild(koordinatenachse);
-        var createLabel = function (val: number, axis: string) {
-            var number = axis == "x" ? world.xToPx(val) : world.yToPx(val)
-            var skala = new PIXI.Text(val + " " + world.originalParams.unit, { fontFamily: "Tahoma", fontSize: world.dimPx().w / 40, fill: color });
-            skala.position.x = axis == "x" ? number : offset.x;
-            skala.position.y = axis == "y" ? number : world.dimPx().h - offset.y;
+        var offset = { x: 5, y: 2 } //px von Rand;
+        var createLabel = (val: number, axis: string) => {
+            //var number = axis == "x" ? world.xToPx(val) : world.yToPx(val)
+            var skala = new PIXI.Text(val + " " + world.originalParams.unit, { fontFamily: "Tahoma", fontSize: world.dim().w / 40, fill: color});
+            skala.resolution = 2 * this.getPxPerUnit()
+            skala.scale.y = -1
+            skala.position.x = axis == "x" ? val : offset.x;
+            skala.position.y = axis == "y" ? val : offset.y;
             skala.anchor.x = axis == "x" ? 0.5 : 0;
             skala.anchor.y = axis == "y" ? 0.5 : 1;
             container!.addChild(skala);
         };
-        var offset = { x: 5, y: 2 } //px von Rand;
 
         if (!onlyX) {
             const maxY = world.minUnits.y + world.dim().h
@@ -220,7 +228,7 @@ export class World {
     createAxis(p: Partial<CoordProps>) {
         const container = new PIXI.Container()
         this.coordProps = {container, ...p}
-        this.app.stage.addChild(container)
+        this.unitContainer.addChild(container)
         this.updateAxis()
     }
 }
@@ -250,8 +258,8 @@ abstract class Drawable implements IDrawable {
         public obj: PIXI.DisplayObject,
         public x: number,
         public y: number,
-        public w?: number,
-        public h?: number,
+        w?: number,
+        h?: number,
         public rotation: number = 0,
         public anchor: TCoord = { x: 0.5, y: 0.5 },
         public alpha: number = 1,
@@ -259,18 +267,30 @@ abstract class Drawable implements IDrawable {
     ) {
         this.forceUnits = {...w && {w}, ...h && {h}}
         this.obj.alpha = this.alpha
+        this.setAnchor(this.anchor)
+    }
+    get w() {
+        return this.forceUnits.w || this.warn()
+    }
+    get h() {
+        return this.forceUnits.h || this.warn()
+    }
+    getResolution() {return {x: 1, y: 1}}
+    warn(): number {
+        throw new Error("can't find dim")
     }
     destroy() {
         this.world.remove(this);
     }
     abstract onResize(): void
     draw() {
-        this.obj.rotation = - this.rotation
-        this.obj.position = this.world.unitsToPx(this);
+        this.obj.rotation = this.rotation
+        this.obj.position = {x: this.x, y: this.y};
     }
     setAnchor(coords: TCoord) {
         this.anchor = coords
-        this.obj.pivot.set(coords.x, coords.y)
+        const {x, y} = this.getResolution()
+        this.obj.pivot.set(x * coords.x * this.w, y * coords.y * this.h)
     }
     onClick(fn: (e: PIXI.FederatedEvent)=>void) {
         this.obj.interactive = true
@@ -311,35 +331,46 @@ export class Actor extends Drawable {
     obj: PIXI.Sprite
     constructor(params: ActorParams) {
         const {alpha = 1, x = 0, y = 0, wUnits, hUnits, rotation = 0, anchor, world, img} = params
-        const obj = PIXI.Sprite.from(getImageUrl(img))
+        const obj = PIXI.Sprite.from(getImageUrl(img), {resolution: 1})
         super(obj, x, y, wUnits, hUnits, rotation, anchor, alpha, world)
         this.obj = obj
         this.img = img
-        this.obj.texture.baseTexture.on("loaded", () => {            
+        this.obj.texture.baseTexture.on("loaded", () => {    
+            this.obj.texture.rotate = 8                   
             this.onResize()
         })
         this.autorotate = params.autorotate ?? true;
         this.onResize()
-        this.anchor = params.anchor || { x: 0.5, y: 0.5 };
-        this.obj.anchor.set(this.anchor.x, this.anchor.y)
+        this.setAnchor(params.anchor || { x: 0.5, y: 0.5 })
         this.world.add(this);
     }
     onResize() {
         const {w, h} = this.forceUnits
         const {width, height} = this.obj.texture.baseTexture
+        const nativeRatio = width / height
         if(w) {
-            this.obj.scale.x = w * this.world.getPxPerUnit() / width;
-            this.obj.scale.y = this.obj.scale.x;
+            this.obj.width = w
+            this.obj.height = w / nativeRatio
         }
         if(h) {
-            this.obj.scale.y = h * this.world.getPxPerUnit() / height;
-            if (!w) this.obj.scale.x = this.obj.scale.y; // allow distortion
+            this.obj.height = h
+            if (!w) this.obj.width = h * nativeRatio; // allow distortion
         }
-        this.obj.position = this.world.unitsToPx(this); 
+        this.setAnchor(this.anchor)
+    }
+    getResolution() {
+        const {width, height} = this.obj.texture.baseTexture
+        return {x: width / this.w, y: height / this.h}
     }
     resize(dim: Partial<TDim>) {
         this.forceUnits = dim
         this.onResize()
+    }
+    get w() {
+        return this.forceUnits.w || this.obj.width
+    }
+    get h() {
+        return this.forceUnits.h || this.obj.height
     }
     draw() {
         super.draw()
@@ -384,7 +415,7 @@ export class Line extends GraphicsSprite {
         const {alpha = 1, color = 0x112233, thickness = 3, world} = params
         const x = 0 //(from.x + to.x) / 2
         const y = 0 //(from.y + to.y) / 2
-        super({x, y, w: Math.abs(to.x - from.x), h: Math.abs(to.y - from.y), alpha, world, color})
+        super({x, y, w: Math.abs(to.x - from.x), h: Math.abs(to.y - from.y), alpha, world, color, anchor: {x:0, y:0}})
         this.thickness = params.thickness || 3
         this.from = from
         this.to = to
@@ -395,13 +426,13 @@ export class Line extends GraphicsSprite {
     resetGraphic() {
         this.obj.clear()
         this.obj.lineStyle(this.thickness * this.world.getPxPerUnit(), this.color, this.alpha);
-        const fromPx = this.world.unitsToPx(this.from)
-        const toPx = this.world.unitsToPx(this.to)
-        this.obj.moveTo(fromPx.x, fromPx.y);
-        this.obj.lineTo(toPx.x, toPx.y);
+        const dx = this.to.x - this.from.x
+        const dy = this.to.y - this.from.y
+        this.obj.moveTo(0,0);
+        this.obj.lineTo(dx, dy);
     }
     draw() {
-        this.obj.position = {x: 0, y: 0};
+        this.obj.position = this.from;
         this.resetGraphic()
     }
 }
@@ -410,24 +441,26 @@ type CircleParams = TCoord & {
     color?: number
     alpha?: number
     world?: World
-    r?: number
+    r: number
 }
 export class Circle extends GraphicsSprite {
+    forceUnits: TDim;
     constructor(params: CircleParams) {
         const {x = 0, y = 0, alpha = 1, color = 0xaabbcc, r = 1, world} = params
         super({x, y, w: 2 * r, h: 2 * r, alpha, world, color})
+        this.forceUnits = {w: 2*r, h: 2*r}
         this.resetGraphic()
         this.draw()
         this.world.add(this)
     }
-    setRadius(value: number) {
-        this.w = this.h = 2 * value
+    setRadius(r: number) {
+        this.forceUnits = {w: 2*r, h: 2*r}
         this.resetGraphic()
     }
     resetGraphic() {
         this.obj.clear()
         this.obj.beginFill(this.color);
-        this.obj.drawCircle(0, 0, this.world.getPxPerUnit() * this.w! / 2);
+        this.obj.drawCircle(this.w! / 2, this.h! / 2, this.w! / 2);
         this.obj.endFill();
     }
 }
