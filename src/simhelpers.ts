@@ -116,14 +116,11 @@ export class World {
         const img = this.img
         if (img) {
             this.background = PIXI.Sprite.from(getImageUrl(img));
-            this.unitContainer.addChild(this.background);
             this.background.texture.rotate = 8
-            this.adaptBgSize() 
+            this.unitContainer.addChild(this.background)
+            this.onloadBackground()
             this.background.texture.baseTexture.on("loaded", () => {
-                //console.log("bg ready", this.background!.texture.rotate);
-                this.background!.texture.rotate = 8
                 this.onloadBackground()
-
             })
         }
     }
@@ -335,11 +332,11 @@ export class Actor extends Drawable {
     constructor(params: ActorParams) {
         const {alpha = 1, x = 0, y = 0, wUnits, hUnits, rotation = 0, anchor, world, img} = params
         const obj = PIXI.Sprite.from(getImageUrl(img), {resolution: 1})
+        obj.texture.rotate = 8   
         super(obj, x, y, wUnits, hUnits, rotation, anchor, alpha, world)
-        this.obj = obj
+        this.obj = obj            
         this.img = img
         this.obj.texture.baseTexture.on("loaded", () => {    
-            this.obj.texture.rotate = 8                   
             this.onResize()
         })
         this.autorotate = params.autorotate ?? true;
