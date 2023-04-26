@@ -13612,8 +13612,8 @@ class gp {
   }
   loadBackground() {
     const t = this.img;
-    t && (this.background = be.from(Ho(t)), this.unitContainer.addChild(this.background), this.background.texture.rotate = 8, this.adaptBgSize(), this.background.texture.baseTexture.on("loaded", () => {
-      this.background.texture.rotate = 8, this.onloadBackground();
+    t && (this.background = be.from(Ho(t)), this.background.texture.rotate = 8, this.unitContainer.addChild(this.background), this.onloadBackground(), this.background.texture.baseTexture.on("loaded", () => {
+      this.onloadBackground();
     }));
   }
   onloadBackground() {
@@ -13733,6 +13733,7 @@ class Xo {
 class _p extends Xo {
   constructor(s) {
     const { alpha: i = 1, x: r = 0, y: n = 0, wUnits: o, hUnits: a, rotation: h = 0, anchor: l, world: c, img: u } = s, d = be.from(Ho(u), { resolution: 1 });
+    d.texture.rotate = 8;
     super(d, r, n, o, a, h, l, i, c);
     Q(this, "vx", 0);
     Q(this, "vy", 0);
@@ -13747,7 +13748,7 @@ class _p extends Xo {
     // alpha: number
     Q(this, "obj");
     this.obj = d, this.img = u, this.obj.texture.baseTexture.on("loaded", () => {
-      this.obj.texture.rotate = 8, this.onResize();
+      this.onResize();
     }), this.autorotate = s.autorotate ?? !0, this.onResize(), this.setAnchor(s.anchor || { x: 0.5, y: 0.5 }), this.world.add(this);
   }
   onResize() {
