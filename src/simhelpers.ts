@@ -112,7 +112,7 @@ export class World {
         this.originalParams.h = h
         this.adaptSize()
     }
-    loadBackground() {
+    private loadBackground() {
         const img = this.img
         if (img) {
             this.background = PIXI.Sprite.from(getImageUrl(img));
@@ -124,7 +124,7 @@ export class World {
             })
         }
     }
-    onloadBackground() {
+    private onloadBackground() {
         if(!this.background?.texture?.valid) return
         const {width, height} = this.background.texture.baseTexture
         const imgRatio = width / height
@@ -134,12 +134,12 @@ export class World {
         this.adaptSize()
         this.adaptBgSize() 
     }
-    adaptBgSize() {
+    private adaptBgSize() {
         if(!this.background) return
         this.background.width = this.w
         this.background.height = this.h
     }
-    onResizeContainer() {
+    private onResizeContainer() {
         if(!this.originalParams.maxPx) {
             this.maxPx = this.getAutoSize()
         }
