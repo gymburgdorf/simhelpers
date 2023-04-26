@@ -120,8 +120,10 @@ export class World {
             this.background.texture.rotate = 8
             this.adaptBgSize() 
             this.background.texture.baseTexture.on("loaded", () => {
-                console.log("bg ready");
+                //console.log("bg ready", this.background!.texture.rotate);
+                this.background!.texture.rotate = 8
                 this.onloadBackground()
+
             })
         }
     }
