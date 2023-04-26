@@ -13714,7 +13714,7 @@ class Xo {
     this.world.remove(this);
   }
   draw() {
-    this.obj.rotation = this.rotation, this.obj.position = { x: this.x, y: this.y };
+    this.obj.rotation = -this.rotation, this.obj.position = { x: this.x, y: this.y };
   }
   setAnchor(t) {
     this.anchor = t;
