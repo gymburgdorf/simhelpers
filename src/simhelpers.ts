@@ -284,7 +284,7 @@ abstract class Drawable implements IDrawable {
     }
     abstract onResize(): void
     draw() {
-        this.obj.rotation = this.rotation
+        this.obj.rotation = -this.rotation
         this.obj.position = {x: this.x, y: this.y};
     }
     setAnchor(coords: TCoord) {
