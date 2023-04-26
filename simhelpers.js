@@ -13714,7 +13714,7 @@ class Xo {
     this.world.remove(this);
   }
   draw() {
-    this.obj.rotation = -this.rotation, this.obj.position = { x: this.x, y: this.y };
+    this.obj.rotation = this.rotation, this.obj.position = { x: this.x, y: this.y };
   }
   setAnchor(t) {
     this.anchor = t;
@@ -13769,7 +13769,7 @@ class _p extends Xo {
     return this.forceUnits.h || this.obj.height;
   }
   draw() {
-    super.draw(), this.autorotate && (this.obj.rotation = Math.atan2(-this.vy, this.vx));
+    super.draw(), this.autorotate && (this.obj.rotation = Math.atan2(this.vy, this.vx));
   }
 }
 class zo extends Xo {
