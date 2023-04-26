@@ -13613,7 +13613,7 @@ class gp {
   loadBackground() {
     const t = this.img;
     t && (this.background = be.from(Ho(t)), this.unitContainer.addChild(this.background), this.background.texture.rotate = 8, this.adaptBgSize(), this.background.texture.baseTexture.on("loaded", () => {
-      console.log("bg ready"), this.onloadBackground();
+      this.background.texture.rotate = 8, this.onloadBackground();
     }));
   }
   onloadBackground() {
