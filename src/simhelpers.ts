@@ -284,7 +284,7 @@ abstract class Drawable implements IDrawable {
     }
     abstract onResize(): void
     draw() {
-        this.obj.rotation = -this.rotation
+        this.obj.rotation = this.rotation
         this.obj.position = {x: this.x, y: this.y};
     }
     setAnchor(coords: TCoord) {
@@ -374,7 +374,7 @@ export class Actor extends Drawable {
     }
     draw() {
         super.draw()
-        if (this.autorotate) { this.obj.rotation = Math.atan2(-this.vy, this.vx); }
+        if (this.autorotate) { this.obj.rotation = Math.atan2(this.vy, this.vx); }
     }
 }
 
