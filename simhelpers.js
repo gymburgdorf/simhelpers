@@ -14218,7 +14218,7 @@ class yd {
       return;
     let { container: t, step: s, color: i = "#444", onlyX: r = !1, onlyY: n = !1 } = this.coordProps;
     t.removeChildren(), s = s || 10 ** Math.log10(Math.ceil(this.w) - 1);
-    var o = this, a = { x: 8 / this.getPxPerUnit(), y: 0 }, h = (l, c) => {
+    var o = this, a = { x: 8 / this.getPxPerUnit(), y: 2 / this.getPxPerUnit() }, h = (l, c) => {
       var u = new yi(l + " " + o.originalParams.unit, { fontFamily: "Tahoma", fontSize: o.dim().w / 40, fill: i });
       u.resolution = 2 * this.getPxPerUnit(), u.scale.y = -1, u.position.x = c == "x" ? l : a.x, u.position.y = c == "y" ? l : a.y, u.anchor.x = c == "x" ? 0.5 : 0, u.anchor.y = c == "y" ? 0.5 : 1, t.addChild(u);
     };
