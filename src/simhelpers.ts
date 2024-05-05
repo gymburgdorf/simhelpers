@@ -202,7 +202,7 @@ export class World {
         //  koordinatenachse.moveTo(0, maxHeight);
         //  koordinatenachse.lineTo(0, 0);
         //  stage.addChild(koordinatenachse);
-        var offset = { x: 5, y: 2 } //px von Rand;
+        var offset = { x: 8 / this.getPxPerUnit(), y: 0} //px von Rand;
         var createLabel = (val: number, axis: string) => {
             //var number = axis == "x" ? world.xToPx(val) : world.yToPx(val)
             var skala = new PIXI.Text(val + " " + world.originalParams.unit, { fontFamily: "Tahoma", fontSize: world.dim().w / 40, fill: color});
