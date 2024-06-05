@@ -374,7 +374,7 @@ export class Actor extends Drawable {
     }
     draw() {
         super.draw()
-        if (this.autorotate) { this.obj.rotation = Math.atan2(this.vy, this.vx); }
+        if (this.autorotate && !(this.vx === 0 && this.vy === 0)) { this.obj.rotation = Math.atan2(this.vy, this.vx); }
     }
 }
 
