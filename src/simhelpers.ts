@@ -34,6 +34,7 @@ export class World {
     readonly app: PIXI.Application
     private readonly unitContainer: PIXI.Container
     private coordProps?: {container: PIXI.Container} & Partial<CoordProps>
+    private updater: ()=>void
 
     constructor(params: WorldParams) {
         this.originalParams = params        
@@ -59,6 +60,8 @@ export class World {
         latestWorld = this
         window.addEventListener("resize", ()=>this.onResizeContainer())       
         //add resizeObserver
+        this.updater = () => this.update()
+        this.app.ticker.add(this.updater)
     }
     private getAutoSize() {
         return {w: Math.min(window.innerWidth, this.element.getBoundingClientRect().width), h: window.innerHeight}
@@ -185,10 +188,11 @@ export class World {
         this.render()
     }
     addTicker(fn: (dt: number)=>void) {
+        this.app.ticker.remove(this.updater)
         this.app.ticker.add((dtframes: number) => {
             fn(dtframes / 60)
-            this.update()
         })
+        this.app.ticker.add(this.updater)
     }
     private updateAxis() {
         if(!this.coordProps) return
@@ -293,7 +297,7 @@ abstract class Drawable implements IDrawable {
         this.obj.pivot.set(x * coords.x * this.w, y * coords.y * this.h)
     }
     onClick(fn: (e: PIXI.FederatedEvent)=>void) {
-        this.obj.interactive = true
+        this.obj.eventMode = "dynamic"
         this.obj.on("click", (e: PIXI.FederatedPointerEvent)=>{
             fn(e)        
         })
