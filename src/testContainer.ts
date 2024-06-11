@@ -10,12 +10,12 @@ const W = 100
 app.stage.addChild(unitContainer)
 
 let el = document.querySelector(".app") as HTMLElement
-el.appendChild(app.view as unknown as HTMLElement)
+el.appendChild(app.canvas as unknown as HTMLElement)
 
 const s1 = PIXI.Sprite.from("/img/flugi.png");
 s1.position.set(10, 10)
 const s2 = PIXI.Sprite.from("/img/submarine.png");
-s2.texture.rotate = 8
+//s2.texture.rotate = 8
 s2.anchor.set(0.5)
 s2.position.set(50, 50)
 s2.width = 10
@@ -25,12 +25,12 @@ unitContainer.addChild(s2)
 app.render()
 
 function resize() {
-    app.view.height = window.innerHeight
-    app.view.width = window.innerWidth
+    app.canvas.height = window.innerHeight
+    app.canvas.width = window.innerWidth
     unitContainer.position.y = app.renderer.height / app.renderer.resolution;
-    const scale = Math.min(app.view.width, app.view.height) / W
+    const scale = Math.min(app.canvas.width, app.canvas.height) / W
     unitContainer.scale.set(scale, -scale)
-    console.log({w: app.view.width, uc: unitContainer.width});
+    console.log({w: app.canvas.width, uc: unitContainer.width});
 }
 
 resize()

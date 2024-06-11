@@ -1,6 +1,5 @@
-// @ts-ignore Import module
-//import * as PIXI from 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.1.4/pixi.min.mjs';
 import * as PIXI from 'pixi.js';
+import { Assets } from 'pixi.js';
 
 type TCoord = { x: number, y: number }
 type TDim = {w: number, h: number}
@@ -22,6 +21,10 @@ function getImageUrl(img: string) {
     return img
 }
 
+async function sleep(millis: number) {
+    return new Promise(r=>setTimeout(r, millis))
+}
+
 export class World {
     readonly originalParams: WorldParams
     readonly element: HTMLElement
@@ -32,7 +35,8 @@ export class World {
     private background?: PIXI.Sprite
     actors: Drawable[]
     readonly app: PIXI.Application
-    private readonly unitContainer: PIXI.Container
+    ready: boolean
+    private unitContainer: PIXI.Container
     private coordProps?: {container: PIXI.Container} & Partial<CoordProps>
     private updater: ()=>void
 
@@ -46,22 +50,31 @@ export class World {
         this.img = params.img || ""
         this.color = params.color || "#111";
         //todo color
-        this.app = new PIXI.Application({
+        this.app = new PIXI.Application();
+        this.unitContainer = new PIXI.Container();
+        this.actors = []
+        this.ready = false
+        this.init()
+        this.updater = () => this.update()
+        latestWorld = this
+    }
+    async init() {
+        await this.app.init({
             background: this.color,
             antialias: true,
-        });
-        this.unitContainer = new PIXI.Container();
+        })
         this.app.stage.addChild(this.unitContainer)
-        this.element.appendChild(this.app.view as unknown as HTMLElement)
-        this.actors = []
+        this.element.appendChild(this.app.canvas)
         this.adaptSize()
-        this.loadBackground()
+        await this.loadBackground()
         this.onResizeContainer()
-        latestWorld = this
         window.addEventListener("resize", ()=>this.onResizeContainer())       
-        //add resizeObserver
-        this.updater = () => this.update()
         this.app.ticker.add(this.updater)
+        this.ready = true
+        //add resizeObserver
+    }
+    async waitForReady() {
+        while(!this.ready) await sleep(10)
     }
     private getAutoSize() {
         return {w: Math.min(window.innerWidth, this.element.getBoundingClientRect().width), h: window.innerHeight}
@@ -81,8 +94,8 @@ export class World {
     }
     adaptSize() {
         const {w: wPx, h: hPx} = this.dimPx()
-        this.app.view.width = wPx
-        this.app.view.height = hPx
+        this.app.canvas.width = wPx
+        this.app.canvas.height = hPx
         this.app.renderer.resize(wPx, hPx);
         this.unitContainer.scale.set(wPx/this.w, -hPx/this.h)
         this.unitContainer.position.y = hPx;
@@ -115,27 +128,24 @@ export class World {
         this.originalParams.h = h
         this.adaptSize()
     }
-    private loadBackground() {
+    private async loadBackground() {
         const img = this.img
         if (img) {
-            this.background = PIXI.Sprite.from(getImageUrl(img));
-            this.background.texture.rotate = 8
-            this.unitContainer.addChild(this.background)
-            this.onloadBackground()
-            this.background.texture.baseTexture.on("loaded", () => {
-                this.onloadBackground()
+            const bgsrc = await Assets.load(getImageUrl(img));
+            const flippedbg = new PIXI.Texture({
+                source: bgsrc.source,
+                rotate: 8,
             })
+            this.background = new PIXI.Sprite(flippedbg);
+            this.unitContainer.addChild(this.background)
+            const {width, height} = this.background.texture
+            const imgRatio = width / height
+            if(!this.getForcedRatio()) {
+                localStorage[this.getAspectKey()] = imgRatio
+            }      
+            this.adaptSize()
+            this.adaptBgSize() 
         }
-    }
-    private onloadBackground() {
-        if(!this.background?.texture?.valid) return
-        const {width, height} = this.background.texture.baseTexture
-        const imgRatio = width / height
-        if(!this.getForcedRatio()) {
-            localStorage[this.getAspectKey()] = imgRatio
-        }      
-        this.adaptSize()
-        this.adaptBgSize() 
     }
     private adaptBgSize() {
         if(!this.background) return
@@ -187,14 +197,16 @@ export class World {
         this.actors.forEach(a => a.draw())
         this.render()
     }
-    addTicker(fn: (dt: number)=>void) {
+    async addTicker(fn: (dt: number)=>void) {
+        await this.waitForReady()
         this.app.ticker.remove(this.updater)
-        this.app.ticker.add((dtframes: number) => {
-            fn(dtframes / 60)
+        this.app.ticker.add((ticker) => {
+            fn(ticker.deltaTime / 60)
         })
         this.app.ticker.add(this.updater)
     }
-    private updateAxis() {
+     private async updateAxis() {
+        await this.waitForReady()
         if(!this.coordProps) return
         let {container, step, color = "#444", onlyX = false, onlyY = false} = this.coordProps
         container.removeChildren()
@@ -245,7 +257,7 @@ export class World {
 //   });
 
 interface IDrawable {
-    obj: PIXI.DisplayObject,
+    obj: PIXI.Container,
     x: number,
     y: number,
     w?: number,
@@ -259,7 +271,7 @@ interface IDrawable {
 abstract class Drawable implements IDrawable {
     forceUnits: Partial<TDim>
     constructor(
-        public obj: PIXI.DisplayObject,
+        public obj: PIXI.Container,
         public x: number,
         public y: number,
         w?: number,
@@ -299,11 +311,26 @@ abstract class Drawable implements IDrawable {
     onClick(fn: (e: PIXI.FederatedEvent)=>void) {
         this.obj.eventMode = "dynamic"
         this.obj.on("click", (e: PIXI.FederatedPointerEvent)=>{
+            /*if(this.obj instanceof PIXI.Sprite) {
+                const localPos = e.getLocalPosition(this.obj);
+                const pixelData = this.world.app.renderer.plugins.extract.pixels(this.obj);
+                const x = Math.floor(localPos.x);
+                const y = Math.floor(localPos.y);
+                const index = (y * this.obj?.texture.width + x) * 4;
+            
+                // Check the alpha value
+                const alpha = pixelData[index + 3];
+                if (alpha > 0) {
+                    console.log('Clicked on a non-transparent area.');
+                } else {
+                    console.log('Clicked on a transparent area.');
+                }
+            }*/
             fn(e)        
         })
     }
-    on(type: keyof PIXI.DisplayObjectEvents, fn: (...args: unknown[])=>void) {
-        this.obj.interactive = true
+    on(type: keyof PIXI.ContainerEvents<PIXI.Container>, fn: (...args: unknown[])=>void) {
+        this.obj.eventMode = "dynamic"
         this.obj.on(type, fn)        
     }
 }
@@ -324,6 +351,7 @@ export class Actor extends Drawable {
     vx = 0
     vy = 0
     img: string
+    ready: boolean
     // x: number
     // y: number
     // forceUnits: Partial<TDim>
@@ -335,22 +363,34 @@ export class Actor extends Drawable {
     obj: PIXI.Sprite
     constructor(params: ActorParams) {
         const {alpha = 1, x = 0, y = 0, wUnits, hUnits, rotation = 0, anchor, world, img} = params
-        const obj = PIXI.Sprite.from(getImageUrl(img), {resolution: 1})
-        obj.texture.rotate = 8   
+        //const obj = PIXI.Sprite.from(getImageUrl(img)) //, {resolution: 1}
+        const obj = new PIXI.Sprite( )
         super(obj, x, y, wUnits, hUnits, rotation, anchor, alpha, world)
         this.obj = obj            
         this.img = img
-        this.obj.texture.baseTexture.on("loaded", () => {    
-            this.onResize()
-        })
+        this.init()
+        this.ready = false
         this.autorotate = params.autorotate ?? true;
-        this.onResize()
         this.setAnchor(params.anchor || { x: 0.5, y: 0.5 })
+    }
+    async init() {
+        const imgsrc = await Assets.load(getImageUrl(this.img))
+        const flipped = new PIXI.Texture({
+            source: imgsrc.source,
+            rotate: 8,
+        })
+        this.obj.texture = flipped
+        await this.world.waitForReady()
+        this.onResize()
         this.world.add(this);
+        this.ready = true
+    }
+    async waitForReady() {
+        while(!this.ready) await sleep(10)
     }
     onResize() {
         const {w, h} = this.forceUnits
-        const {width, height} = this.obj.texture.baseTexture
+        const {width, height} = this.obj.texture.source
         const nativeRatio = width / height
         if(w) {
             this.obj.width = w
@@ -363,7 +403,7 @@ export class Actor extends Drawable {
         this.setAnchor(this.anchor)
     }
     getResolution() {
-        const {width, height} = this.obj.texture.baseTexture
+        const {width, height} = this.obj.texture.source
         return {x: width / this.w, y: height / this.h}
     }
     resize(dim: Partial<TDim>) {
@@ -423,17 +463,24 @@ export class Line extends GraphicsSprite {
         this.thickness = params.thickness || 3
         this.from = from
         this.to = to
+        this.init()
+    }
+    async init() {
+        await this.world.waitForReady()
         this.resetGraphic()
         this.draw()
         this.world.add(this)
     }
     resetGraphic() {
         this.obj.clear()
-        this.obj.lineStyle(this.thickness * this.world.getPxPerUnit(), this.color, this.alpha);
+        this.obj.setStrokeStyle({
+            width: this.thickness * this.world.getPxPerUnit(), color: this.color, alpha: this.alpha
+        });
         const dx = this.to.x - this.from.x
         const dy = this.to.y - this.from.y
         this.obj.moveTo(0,0);
         this.obj.lineTo(dx, dy);
+        this.obj.stroke()
     }
     draw() {
         this.obj.position = this.from;
@@ -455,6 +502,11 @@ export class Circle extends GraphicsSprite {
         this.forceUnits = {w: 2*r, h: 2*r}
         this.resetGraphic()
         this.draw()
+        this.init()
+        
+    }
+    async init() {
+        await this.world.waitForReady()
         this.world.add(this)
     }
     setRadius(r: number) {
@@ -463,9 +515,9 @@ export class Circle extends GraphicsSprite {
     }
     resetGraphic() {
         this.obj.clear()
-        this.obj.beginFill(this.color);
-        this.obj.drawCircle(this.w! / 2, this.h! / 2, this.w! / 2);
-        this.obj.endFill();
+        this.obj.setFillStyle({color: this.color});
+        this.obj.circle(this.w! / 2, this.h! / 2, this.w! / 2);
+        this.obj.fill()
     }
 }
   
