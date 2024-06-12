@@ -879,7 +879,6 @@ function hh(e, t) {
               continue;
             }
           }
-          t && (s.length > 0 ? s += "/.." : s = "..", i = 2);
         } else
           s.length > 0 ? s += `/${e.slice(r + 1, a)}` : s = e.slice(r + 1, a), i = a - r - 1;
       r = a, n = 0;
@@ -924,7 +923,7 @@ const bt = {
     const s = e.startsWith("/");
     this.hasProtocol(e) && (t = this.rootname(e), e = e.slice(t.length));
     const i = e.endsWith("/");
-    return e = hh(e, !1), e.length > 0 && i && (e += "/"), s ? `/${e}` : t + e;
+    return e = hh(e), e.length > 0 && i && (e += "/"), s ? `/${e}` : t + e;
   },
   isAbsolute(e) {
     return Rt(e), e = this.toPosix(e), this.hasProtocol(e) ? !0 : e.startsWith("/");
