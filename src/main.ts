@@ -46,18 +46,18 @@ function taste(event: { key: string; }) {
 	console.log("Eine Taste wurde gedrückt:", event.key)
 } 
 
-let track = new Actor({
+let glider = new Actor({
   img: `https://gymburgdorf.github.io/simhelpers/img/Segelflieger-100.png`,
   x: 50,
   y: 20,
   wUnits: 50,
   autorotate: false
 })
-track.vx = 0.11
-track.vy = 0.11
+glider.vx = 0.11
+glider.vy = 0.11
 
 
-let glider = new Actor({
+let track = new Actor({
     img: "img/Track.svg",
     x: 100,
     y: 100,
@@ -65,15 +65,19 @@ let glider = new Actor({
     autorotate: false
 });
 
+glider.onClick(e=>{
+    console.log(e)
+})
+
 let a = 0
 function loop(dt: number) {
 	flugi.x += flugi.vx * dt
 	flugi2.x += flugi2.vx * dt
-    glider.setAnchor({x: 0.674, y: 0.5})
-	glider.rotation += 0.01
+    track.setAnchor({x: 0.674, y: 0.5})
+	track.rotation += 0.01
     t += dt
     //track.setAnchor({x: 10*Math.sin(a), y: 60*Math.cos(a)})
-    track.rotation += 0.01
+    glider.rotation += 0.01
  }
 
 

@@ -299,7 +299,12 @@ abstract class Drawable implements IDrawable {
     onClick(fn: (e: PIXI.FederatedEvent)=>void) {
         this.obj.eventMode = "dynamic"
         this.obj.on("click", (e: PIXI.FederatedPointerEvent)=>{
-            fn(e)        
+            const {x, y} = this.obj.toLocal(e.global);
+            const canvas = this.world.app.renderer.extract.canvas(this.obj);
+            const context = canvas.getContext('2d')!
+            const pixelData = context.getImageData(Math.floor(x), Math.floor(y), 1, 1).data;
+            const alpha = pixelData[3]
+            if(alpha > 0) fn(e)        
         })
     }
     on(type: keyof PIXI.DisplayObjectEvents, fn: (...args: unknown[])=>void) {
