@@ -14270,7 +14270,8 @@ class pa {
   }
   onClick(t) {
     this.obj.eventMode = "dynamic", this.obj.on("click", (s) => {
-      t(s);
+      const { x: i, y: r } = this.obj.toLocal(s.global);
+      this.world.app.renderer.extract.canvas(this.obj).getContext("2d").getImageData(Math.floor(i), Math.floor(r), 1, 1).data[3] > 0 && t(s);
     });
   }
   on(t, s) {
