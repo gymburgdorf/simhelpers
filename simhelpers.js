@@ -1,6 +1,6 @@
 var _a = Object.defineProperty;
 var xa = (e, t, s) => t in e ? _a(e, t, { enumerable: !0, configurable: !0, writable: !0, value: s }) : e[t] = s;
-var Q = (e, t, s) => (xa(e, typeof t != "symbol" ? t + "" : t, s), s);
+var Q = (e, t, s) => xa(e, typeof t != "symbol" ? t + "" : t, s);
 var Ce = /* @__PURE__ */ ((e) => (e[e.WEBGL_LEGACY = 0] = "WEBGL_LEGACY", e[e.WEBGL = 1] = "WEBGL", e[e.WEBGL2 = 2] = "WEBGL2", e))(Ce || {}), qn = /* @__PURE__ */ ((e) => (e[e.UNKNOWN = 0] = "UNKNOWN", e[e.WEBGL = 1] = "WEBGL", e[e.CANVAS = 2] = "CANVAS", e))(qn || {}), qi = /* @__PURE__ */ ((e) => (e[e.COLOR = 16384] = "COLOR", e[e.DEPTH = 256] = "DEPTH", e[e.STENCIL = 1024] = "STENCIL", e))(qi || {}), G = /* @__PURE__ */ ((e) => (e[e.NORMAL = 0] = "NORMAL", e[e.ADD = 1] = "ADD", e[e.MULTIPLY = 2] = "MULTIPLY", e[e.SCREEN = 3] = "SCREEN", e[e.OVERLAY = 4] = "OVERLAY", e[e.DARKEN = 5] = "DARKEN", e[e.LIGHTEN = 6] = "LIGHTEN", e[e.COLOR_DODGE = 7] = "COLOR_DODGE", e[e.COLOR_BURN = 8] = "COLOR_BURN", e[e.HARD_LIGHT = 9] = "HARD_LIGHT", e[e.SOFT_LIGHT = 10] = "SOFT_LIGHT", e[e.DIFFERENCE = 11] = "DIFFERENCE", e[e.EXCLUSION = 12] = "EXCLUSION", e[e.HUE = 13] = "HUE", e[e.SATURATION = 14] = "SATURATION", e[e.COLOR = 15] = "COLOR", e[e.LUMINOSITY = 16] = "LUMINOSITY", e[e.NORMAL_NPM = 17] = "NORMAL_NPM", e[e.ADD_NPM = 18] = "ADD_NPM", e[e.SCREEN_NPM = 19] = "SCREEN_NPM", e[e.NONE = 20] = "NONE", e[e.SRC_OVER = 0] = "SRC_OVER", e[e.SRC_IN = 21] = "SRC_IN", e[e.SRC_OUT = 22] = "SRC_OUT", e[e.SRC_ATOP = 23] = "SRC_ATOP", e[e.DST_OVER = 24] = "DST_OVER", e[e.DST_IN = 25] = "DST_IN", e[e.DST_OUT = 26] = "DST_OUT", e[e.DST_ATOP = 27] = "DST_ATOP", e[e.ERASE = 26] = "ERASE", e[e.SUBTRACT = 28] = "SUBTRACT", e[e.XOR = 29] = "XOR", e))(G || {}), Yt = /* @__PURE__ */ ((e) => (e[e.POINTS = 0] = "POINTS", e[e.LINES = 1] = "LINES", e[e.LINE_LOOP = 2] = "LINE_LOOP", e[e.LINE_STRIP = 3] = "LINE_STRIP", e[e.TRIANGLES = 4] = "TRIANGLES", e[e.TRIANGLE_STRIP = 5] = "TRIANGLE_STRIP", e[e.TRIANGLE_FAN = 6] = "TRIANGLE_FAN", e))(Yt || {}), C = /* @__PURE__ */ ((e) => (e[e.RGBA = 6408] = "RGBA", e[e.RGB = 6407] = "RGB", e[e.RG = 33319] = "RG", e[e.RED = 6403] = "RED", e[e.RGBA_INTEGER = 36249] = "RGBA_INTEGER", e[e.RGB_INTEGER = 36248] = "RGB_INTEGER", e[e.RG_INTEGER = 33320] = "RG_INTEGER", e[e.RED_INTEGER = 36244] = "RED_INTEGER", e[e.ALPHA = 6406] = "ALPHA", e[e.LUMINANCE = 6409] = "LUMINANCE", e[e.LUMINANCE_ALPHA = 6410] = "LUMINANCE_ALPHA", e[e.DEPTH_COMPONENT = 6402] = "DEPTH_COMPONENT", e[e.DEPTH_STENCIL = 34041] = "DEPTH_STENCIL", e))(C || {}), Ge = /* @__PURE__ */ ((e) => (e[e.TEXTURE_2D = 3553] = "TEXTURE_2D", e[e.TEXTURE_CUBE_MAP = 34067] = "TEXTURE_CUBE_MAP", e[e.TEXTURE_2D_ARRAY = 35866] = "TEXTURE_2D_ARRAY", e[e.TEXTURE_CUBE_MAP_POSITIVE_X = 34069] = "TEXTURE_CUBE_MAP_POSITIVE_X", e[e.TEXTURE_CUBE_MAP_NEGATIVE_X = 34070] = "TEXTURE_CUBE_MAP_NEGATIVE_X", e[e.TEXTURE_CUBE_MAP_POSITIVE_Y = 34071] = "TEXTURE_CUBE_MAP_POSITIVE_Y", e[e.TEXTURE_CUBE_MAP_NEGATIVE_Y = 34072] = "TEXTURE_CUBE_MAP_NEGATIVE_Y", e[e.TEXTURE_CUBE_MAP_POSITIVE_Z = 34073] = "TEXTURE_CUBE_MAP_POSITIVE_Z", e[e.TEXTURE_CUBE_MAP_NEGATIVE_Z = 34074] = "TEXTURE_CUBE_MAP_NEGATIVE_Z", e))(Ge || {}), U = /* @__PURE__ */ ((e) => (e[e.UNSIGNED_BYTE = 5121] = "UNSIGNED_BYTE", e[e.UNSIGNED_SHORT = 5123] = "UNSIGNED_SHORT", e[e.UNSIGNED_SHORT_5_6_5 = 33635] = "UNSIGNED_SHORT_5_6_5", e[e.UNSIGNED_SHORT_4_4_4_4 = 32819] = "UNSIGNED_SHORT_4_4_4_4", e[e.UNSIGNED_SHORT_5_5_5_1 = 32820] = "UNSIGNED_SHORT_5_5_5_1", e[e.UNSIGNED_INT = 5125] = "UNSIGNED_INT", e[e.UNSIGNED_INT_10F_11F_11F_REV = 35899] = "UNSIGNED_INT_10F_11F_11F_REV", e[e.UNSIGNED_INT_2_10_10_10_REV = 33640] = "UNSIGNED_INT_2_10_10_10_REV", e[e.UNSIGNED_INT_24_8 = 34042] = "UNSIGNED_INT_24_8", e[e.UNSIGNED_INT_5_9_9_9_REV = 35902] = "UNSIGNED_INT_5_9_9_9_REV", e[e.BYTE = 5120] = "BYTE", e[e.SHORT = 5122] = "SHORT", e[e.INT = 5124] = "INT", e[e.FLOAT = 5126] = "FLOAT", e[e.FLOAT_32_UNSIGNED_INT_24_8_REV = 36269] = "FLOAT_32_UNSIGNED_INT_24_8_REV", e[e.HALF_FLOAT = 36193] = "HALF_FLOAT", e))(U || {}), Ki = /* @__PURE__ */ ((e) => (e[e.FLOAT = 0] = "FLOAT", e[e.INT = 1] = "INT", e[e.UINT = 2] = "UINT", e))(Ki || {}), se = /* @__PURE__ */ ((e) => (e[e.NEAREST = 0] = "NEAREST", e[e.LINEAR = 1] = "LINEAR", e))(se || {}), ue = /* @__PURE__ */ ((e) => (e[e.CLAMP = 33071] = "CLAMP", e[e.REPEAT = 10497] = "REPEAT", e[e.MIRRORED_REPEAT = 33648] = "MIRRORED_REPEAT", e))(ue || {}), Zt = /* @__PURE__ */ ((e) => (e[e.OFF = 0] = "OFF", e[e.POW2 = 1] = "POW2", e[e.ON = 2] = "ON", e[e.ON_MANUAL = 3] = "ON_MANUAL", e))(Zt || {}), Ht = /* @__PURE__ */ ((e) => (e[e.NPM = 0] = "NPM", e[e.UNPACK = 1] = "UNPACK", e[e.PMA = 2] = "PMA", e[e.NO_PREMULTIPLIED_ALPHA = 0] = "NO_PREMULTIPLIED_ALPHA", e[e.PREMULTIPLY_ON_UPLOAD = 1] = "PREMULTIPLY_ON_UPLOAD", e[e.PREMULTIPLIED_ALPHA = 2] = "PREMULTIPLIED_ALPHA", e))(Ht || {}), jt = /* @__PURE__ */ ((e) => (e[e.NO = 0] = "NO", e[e.YES = 1] = "YES", e[e.AUTO = 2] = "AUTO", e[e.BLEND = 0] = "BLEND", e[e.CLEAR = 1] = "CLEAR", e[e.BLIT = 2] = "BLIT", e))(jt || {}), Ir = /* @__PURE__ */ ((e) => (e[e.AUTO = 0] = "AUTO", e[e.MANUAL = 1] = "MANUAL", e))(Ir || {}), Ct = /* @__PURE__ */ ((e) => (e.LOW = "lowp", e.MEDIUM = "mediump", e.HIGH = "highp", e))(Ct || {}), ut = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.SCISSOR = 1] = "SCISSOR", e[e.STENCIL = 2] = "STENCIL", e[e.SPRITE = 3] = "SPRITE", e[e.COLOR = 4] = "COLOR", e))(ut || {}), lt = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.LOW = 2] = "LOW", e[e.MEDIUM = 4] = "MEDIUM", e[e.HIGH = 8] = "HIGH", e))(lt || {}), qt = /* @__PURE__ */ ((e) => (e[e.ELEMENT_ARRAY_BUFFER = 34963] = "ELEMENT_ARRAY_BUFFER", e[e.ARRAY_BUFFER = 34962] = "ARRAY_BUFFER", e[e.UNIFORM_BUFFER = 35345] = "UNIFORM_BUFFER", e))(qt || {});
 const ya = {
   createCanvas: (e, t) => {
@@ -112,17 +112,14 @@ var Zn = { exports: {} };
   }
   a.prototype.eventNames = function() {
     var l = [], c, u;
-    if (this._eventsCount === 0)
-      return l;
+    if (this._eventsCount === 0) return l;
     for (u in c = this._events)
       t.call(c, u) && l.push(s ? u.slice(1) : u);
     return Object.getOwnPropertySymbols ? l.concat(Object.getOwnPropertySymbols(c)) : l;
   }, a.prototype.listeners = function(l) {
     var c = s ? s + l : l, u = this._events[c];
-    if (!u)
-      return [];
-    if (u.fn)
-      return [u.fn];
+    if (!u) return [];
+    if (u.fn) return [u.fn];
     for (var d = 0, f = u.length, p = new Array(f); d < f; d++)
       p[d] = u[d].fn;
     return p;
@@ -131,8 +128,7 @@ var Zn = { exports: {} };
     return u ? u.fn ? 1 : u.length : 0;
   }, a.prototype.emit = function(l, c, u, d, f, p) {
     var _ = s ? s + l : l;
-    if (!this._events[_])
-      return !1;
+    if (!this._events[_]) return !1;
     var m = this._events[_], x = arguments.length, v, g;
     if (m.fn) {
       switch (m.once && this.removeListener(l, m.fn, void 0, !0), x) {
@@ -169,9 +165,8 @@ var Zn = { exports: {} };
             m[g].fn.call(m[g].context, c, u, d);
             break;
           default:
-            if (!v)
-              for (T = 1, v = new Array(x - 1); T < x; T++)
-                v[T - 1] = arguments[T];
+            if (!v) for (T = 1, v = new Array(x - 1); T < x; T++)
+              v[T - 1] = arguments[T];
             m[g].fn.apply(m[g].context, v);
         }
     }
@@ -182,8 +177,7 @@ var Zn = { exports: {} };
     return n(this, l, c, u, !0);
   }, a.prototype.removeListener = function(l, c, u, d) {
     var f = s ? s + l : l;
-    if (!this._events[f])
-      return this;
+    if (!this._events[f]) return this;
     if (!c)
       return o(this, f), this;
     var p = this._events[f];
@@ -208,8 +202,7 @@ Rr.exports.default = ai;
 function ai(e, t, s) {
   s = s || 2;
   var i = t && t.length, r = i ? t[0] * s : e.length, n = Jn(e, 0, r, s, !0), o = [];
-  if (!n || n.next === n.prev)
-    return o;
+  if (!n || n.next === n.prev) return o;
   var a, h, l, c, u, d, f;
   if (i && (n = Ca(e, t, n, s)), e.length > 80 * s) {
     a = l = e[0], h = c = e[1];
@@ -222,22 +215,18 @@ function ai(e, t, s) {
 function Jn(e, t, s, i, r) {
   var n, o;
   if (r === Qi(e, t, s, i) > 0)
-    for (n = t; n < s; n += i)
-      o = Kr(n, e[n], e[n + 1], o);
+    for (n = t; n < s; n += i) o = Kr(n, e[n], e[n + 1], o);
   else
-    for (n = s - i; n >= t; n -= i)
-      o = Kr(n, e[n], e[n + 1], o);
+    for (n = s - i; n >= t; n -= i) o = Kr(n, e[n], e[n + 1], o);
   return o && hi(o, o.next) && (us(o), o = o.next), o;
 }
 function we(e, t) {
-  if (!e)
-    return e;
+  if (!e) return e;
   t || (t = e);
   var s = e, i;
   do
     if (i = !1, !s.steiner && (hi(s, s.next) || it(s.prev, s, s.next) === 0)) {
-      if (us(s), s = t = s.prev, s === s.next)
-        break;
+      if (us(s), s = t = s.prev, s === s.next) break;
       i = !0;
     } else
       s = s.next;
@@ -261,32 +250,26 @@ function ls(e, t, s, i, r, n, o) {
 }
 function Ea(e) {
   var t = e.prev, s = e, i = e.next;
-  if (it(t, s, i) >= 0)
-    return !1;
+  if (it(t, s, i) >= 0) return !1;
   for (var r = t.x, n = s.x, o = i.x, a = t.y, h = s.y, l = i.y, c = r < n ? r < o ? r : o : n < o ? n : o, u = a < h ? a < l ? a : l : h < l ? h : l, d = r > n ? r > o ? r : o : n > o ? n : o, f = a > h ? a > l ? a : l : h > l ? h : l, p = i.next; p !== t; ) {
-    if (p.x >= c && p.x <= d && p.y >= u && p.y <= f && Ue(r, a, n, h, o, l, p.x, p.y) && it(p.prev, p, p.next) >= 0)
-      return !1;
+    if (p.x >= c && p.x <= d && p.y >= u && p.y <= f && Ue(r, a, n, h, o, l, p.x, p.y) && it(p.prev, p, p.next) >= 0) return !1;
     p = p.next;
   }
   return !0;
 }
 function wa(e, t, s, i) {
   var r = e.prev, n = e, o = e.next;
-  if (it(r, n, o) >= 0)
-    return !1;
+  if (it(r, n, o) >= 0) return !1;
   for (var a = r.x, h = n.x, l = o.x, c = r.y, u = n.y, d = o.y, f = a < h ? a < l ? a : l : h < l ? h : l, p = c < u ? c < d ? c : d : u < d ? u : d, _ = a > h ? a > l ? a : l : h > l ? h : l, m = c > u ? c > d ? c : d : u > d ? u : d, x = Zi(f, p, t, s, i), v = Zi(_, m, t, s, i), g = e.prevZ, y = e.nextZ; g && g.z >= x && y && y.z <= v; ) {
-    if (g.x >= f && g.x <= _ && g.y >= p && g.y <= m && g !== r && g !== o && Ue(a, c, h, u, l, d, g.x, g.y) && it(g.prev, g, g.next) >= 0 || (g = g.prevZ, y.x >= f && y.x <= _ && y.y >= p && y.y <= m && y !== r && y !== o && Ue(a, c, h, u, l, d, y.x, y.y) && it(y.prev, y, y.next) >= 0))
-      return !1;
+    if (g.x >= f && g.x <= _ && g.y >= p && g.y <= m && g !== r && g !== o && Ue(a, c, h, u, l, d, g.x, g.y) && it(g.prev, g, g.next) >= 0 || (g = g.prevZ, y.x >= f && y.x <= _ && y.y >= p && y.y <= m && y !== r && y !== o && Ue(a, c, h, u, l, d, y.x, y.y) && it(y.prev, y, y.next) >= 0)) return !1;
     y = y.nextZ;
   }
   for (; g && g.z >= x; ) {
-    if (g.x >= f && g.x <= _ && g.y >= p && g.y <= m && g !== r && g !== o && Ue(a, c, h, u, l, d, g.x, g.y) && it(g.prev, g, g.next) >= 0)
-      return !1;
+    if (g.x >= f && g.x <= _ && g.y >= p && g.y <= m && g !== r && g !== o && Ue(a, c, h, u, l, d, g.x, g.y) && it(g.prev, g, g.next) >= 0) return !1;
     g = g.prevZ;
   }
   for (; y && y.z <= v; ) {
-    if (y.x >= f && y.x <= _ && y.y >= p && y.y <= m && y !== r && y !== o && Ue(a, c, h, u, l, d, y.x, y.y) && it(y.prev, y, y.next) >= 0)
-      return !1;
+    if (y.x >= f && y.x <= _ && y.y >= p && y.y <= m && y !== r && y !== o && Ue(a, c, h, u, l, d, y.x, y.y) && it(y.prev, y, y.next) >= 0) return !1;
     y = y.nextZ;
   }
   return !0;
@@ -341,8 +324,7 @@ function Pa(e, t) {
     }
     s = s.next;
   } while (s !== t);
-  if (!o)
-    return null;
+  if (!o) return null;
   var h = o, l = o.x, c = o.y, u = 1 / 0, d;
   s = o;
   do
@@ -412,8 +394,7 @@ function ws(e) {
 function Na(e, t) {
   var s = e;
   do {
-    if (s.i !== e.i && s.next.i !== e.i && s.i !== t.i && s.next.i !== t.i && Qn(s, s.next, e, t))
-      return !0;
+    if (s.i !== e.i && s.next.i !== e.i && s.i !== t.i && s.next.i !== t.i && Qn(s, s.next, e, t)) return !0;
     s = s.next;
   } while (s !== e);
   return !1;
@@ -466,8 +447,7 @@ function Qi(e, t, s, i) {
 ai.flatten = function(e) {
   for (var t = e[0][0].length, s = { vertices: [], holes: [], dimensions: t }, i = 0, r = 0; r < e.length; r++) {
     for (var n = 0; n < e[r].length; n++)
-      for (var o = 0; o < t; o++)
-        s.vertices.push(e[r][n][o]);
+      for (var o = 0; o < t; o++) s.vertices.push(e[r][n][o]);
     r > 0 && (i += e[r - 1].length, s.holes.push(i));
   }
   return s;
@@ -673,8 +653,7 @@ var qa = /^([a-z0-9.+-]+:)/i, Ka = /:[0-9]*$/, Za = /^(\/\/?(?!\/)[^\?\s]*)(\?[^
   "file:": !0
 }, sr = ds;
 function li(e, t, s) {
-  if (e && Wt.isObject(e) && e instanceof Ut)
-    return e;
+  if (e && Wt.isObject(e) && e instanceof Ut) return e;
   var i = new Ut();
   return i.parse(e, t, s), i;
 }
@@ -792,8 +771,7 @@ Ut.prototype.resolveObject = function(e) {
       return s.href = s.format(), s;
     }
     if (s.protocol = e.protocol, !e.host && !er[e.protocol]) {
-      for (var g = (e.pathname || "").split("/"); g.length && !(e.host = g.shift()); )
-        ;
+      for (var g = (e.pathname || "").split("/"); g.length && !(e.host = g.shift()); ) ;
       e.host || (e.host = ""), e.hostname || (e.hostname = ""), g[0] !== "" && g.unshift(""), g.length < 2 && g.unshift(""), s.pathname = g.join("/");
     } else
       s.pathname = e.pathname;
@@ -865,25 +843,23 @@ function hh(e, t) {
       o = 47;
     }
     if (o === 47) {
-      if (!(r === a - 1 || n === 1))
-        if (r !== a - 1 && n === 2) {
-          if (s.length < 2 || i !== 2 || s.charCodeAt(s.length - 1) !== 46 || s.charCodeAt(s.length - 2) !== 46) {
-            if (s.length > 2) {
-              const h = s.lastIndexOf("/");
-              if (h !== s.length - 1) {
-                h === -1 ? (s = "", i = 0) : (s = s.slice(0, h), i = s.length - 1 - s.lastIndexOf("/")), r = a, n = 0;
-                continue;
-              }
-            } else if (s.length === 2 || s.length === 1) {
-              s = "", i = 0, r = a, n = 0;
+      if (!(r === a - 1 || n === 1)) if (r !== a - 1 && n === 2) {
+        if (s.length < 2 || i !== 2 || s.charCodeAt(s.length - 1) !== 46 || s.charCodeAt(s.length - 2) !== 46) {
+          if (s.length > 2) {
+            const h = s.lastIndexOf("/");
+            if (h !== s.length - 1) {
+              h === -1 ? (s = "", i = 0) : (s = s.slice(0, h), i = s.length - 1 - s.lastIndexOf("/")), r = a, n = 0;
               continue;
             }
+          } else if (s.length === 2 || s.length === 1) {
+            s = "", i = 0, r = a, n = 0;
+            continue;
           }
-        } else
-          s.length > 0 ? s += `/${e.slice(r + 1, a)}` : s = e.slice(r + 1, a), i = a - r - 1;
+        }
+      } else
+        s.length > 0 ? s += `/${e.slice(r + 1, a)}` : s = e.slice(r + 1, a), i = a - r - 1;
       r = a, n = 0;
-    } else
-      o === 46 && n !== -1 ? ++n : n = -1;
+    } else o === 46 && n !== -1 ? ++n : n = -1;
   }
   return s;
 }
@@ -997,8 +973,7 @@ const bt = {
           s = n + 1;
           break;
         }
-      } else
-        i === -1 && (r = !1, i = n + 1);
+      } else i === -1 && (r = !1, i = n + 1);
     return i === -1 ? "" : e.slice(s, i);
   },
   extname(e) {
@@ -1119,8 +1094,7 @@ var ch = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, te = function(e) {
   return t ? t[2] !== t[4] || t[4] !== t[6] ? null : en({ r: Number(t[1]) / (t[2] ? 100 / 255 : 1), g: Number(t[3]) / (t[4] ? 100 / 255 : 1), b: Number(t[5]) / (t[6] ? 100 / 255 : 1), a: t[7] === void 0 ? 1 : Number(t[7]) / (t[8] ? 100 : 1) }) : null;
 }, "rgb"], [function(e) {
   var t = dh.exec(e) || fh.exec(e);
-  if (!t)
-    return null;
+  if (!t) return null;
   var s, i, r = sn({ h: (s = t[1], i = t[2], i === void 0 && (i = "deg"), Number(s) * (ch[i] || 1)), s: Number(t[3]), l: Number(t[4]), a: t[5] === void 0 ? 1 : Number(t[5]) / (t[6] ? 100 : 1) });
   return nn(r);
 }, "hsl"]], object: [[function(e) {
@@ -1128,14 +1102,12 @@ var ch = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, te = function(e) {
   return te(t) && te(s) && te(i) ? en({ r: Number(t), g: Number(s), b: Number(i), a: Number(n) }) : null;
 }, "rgb"], [function(e) {
   var t = e.h, s = e.s, i = e.l, r = e.a, n = r === void 0 ? 1 : r;
-  if (!te(t) || !te(s) || !te(i))
-    return null;
+  if (!te(t) || !te(s) || !te(i)) return null;
   var o = sn({ h: Number(t), s: Number(s), l: Number(i), a: Number(n) });
   return nn(o);
 }, "hsl"], [function(e) {
   var t = e.h, s = e.s, i = e.v, r = e.a, n = r === void 0 ? 1 : r;
-  if (!te(t) || !te(s) || !te(i))
-    return null;
+  if (!te(t) || !te(s) || !te(i)) return null;
   var o = function(a) {
     return { h: eo(a.h), s: It(a.s, 0, 100), v: It(a.v, 0, 100), a: It(a.a) };
   }({ h: Number(t), s: Number(s), v: Number(i), a: Number(n) });
@@ -1143,8 +1115,7 @@ var ch = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, te = function(e) {
 }, "hsv"]] }, on = function(e, t) {
   for (var s = 0; s < t.length; s++) {
     var i = t[s][0](e);
-    if (i)
-      return [i, t[s][1]];
+    if (i) return [i, t[s][1]];
   }
   return [null, void 0];
 }, gh = function(e) {
@@ -1218,20 +1189,15 @@ var ch = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, te = function(e) {
 };
 function xh(e, t) {
   var s = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, i = {};
-  for (var r in s)
-    i[s[r]] = r;
+  for (var r in s) i[s[r]] = r;
   var n = {};
   e.prototype.toName = function(o) {
-    if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b))
-      return "transparent";
+    if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
     var a, h, l = i[this.toHex()];
-    if (l)
-      return l;
+    if (l) return l;
     if (o != null && o.closest) {
       var c = this.toRgb(), u = 1 / 0, d = "black";
-      if (!n.length)
-        for (var f in s)
-          n[f] = new e(s[f]).toRgb();
+      if (!n.length) for (var f in s) n[f] = new e(s[f]).toRgb();
       for (var p in s) {
         var _ = (a = c, h = n[p], Math.pow(a.r - h.r, 2) + Math.pow(a.g - h.g, 2) + Math.pow(a.b - h.b, 2));
         _ < u && (u = _, d = p);
@@ -4322,8 +4288,7 @@ class wo {
     if (t === this.defaultFilterStack[this.defaultFilterStack.length - 1].renderTexture ? this.renderer.projection.transform = this.activeState.transform : this.renderer.projection.transform = null, t != null && t.filterFrame) {
       const o = this.tempRect;
       o.x = 0, o.y = 0, o.width = t.filterFrame.width, o.height = t.filterFrame.height, i.bind(t, t.filterFrame, o);
-    } else
-      t !== this.defaultFilterStack[this.defaultFilterStack.length - 1].renderTexture ? i.bind(t) : this.renderer.renderTexture.bind(t, this.activeState.bindingSourceFrame, this.activeState.bindingDestinationFrame);
+    } else t !== this.defaultFilterStack[this.defaultFilterStack.length - 1].renderTexture ? i.bind(t) : this.renderer.renderTexture.bind(t, this.activeState.bindingSourceFrame, this.activeState.bindingDestinationFrame);
     const n = r.stateId & 1 || this.forceClear;
     (s === jt.CLEAR || s === jt.BLIT && n) && this.renderer.framebuffer.clear(0, 0, 0, 0);
   }
@@ -4653,8 +4618,7 @@ class So {
     if (o.indexBuffer) {
       const a = o.indexBuffer.data.BYTES_PER_ELEMENT, h = a === 2 ? n.UNSIGNED_SHORT : n.UNSIGNED_INT;
       a === 2 || a === 4 && this.canUseUInt32ElementIndex ? o.instanced ? n.drawElementsInstanced(t, s || o.indexBuffer.data.length, h, (i || 0) * a, r || 1) : n.drawElements(t, s || o.indexBuffer.data.length, h, (i || 0) * a) : console.warn("unsupported index buffer type: uint32");
-    } else
-      o.instanced ? n.drawArraysInstanced(t, i, s || o.getSize(), r || 1) : n.drawArrays(t, i, s || o.getSize());
+    } else o.instanced ? n.drawArraysInstanced(t, i, s || o.getSize(), r || 1) : n.drawArrays(t, i, s || o.getSize());
     return this;
   }
   unbind() {
@@ -7141,8 +7105,7 @@ const gr = class extends rt {
         if (t.calculateBounds(), t._mask) {
           const s = t._mask.isMaskData ? t._mask.maskObject : t._mask;
           s ? (s.calculateBounds(), this._bounds.addBoundsMask(t._bounds, s._bounds)) : this._bounds.addBounds(t._bounds);
-        } else
-          t.filterArea ? this._bounds.addBoundsArea(t._bounds, t.filterArea) : this._bounds.addBounds(t._bounds);
+        } else t.filterArea ? this._bounds.addBoundsArea(t._bounds, t.filterArea) : this._bounds.addBounds(t._bounds);
     }
     this._bounds.updateID = this._boundsID;
   }
@@ -7593,8 +7556,7 @@ class tc extends xt {
     if (n && o) {
       const a = t.getFilterTexture();
       this.blurXFilter.apply(t, s, a, jt.CLEAR), this.blurYFilter.apply(t, a, i, r), t.returnFilterTexture(a);
-    } else
-      o ? this.blurYFilter.apply(t, s, i, r) : this.blurXFilter.apply(t, s, i, r);
+    } else o ? this.blurYFilter.apply(t, s, i, r) : this.blurXFilter.apply(t, s, i, r);
   }
   updatePadding() {
     this._repeatEdgePixels ? this.padding = 0 : this.padding = Math.max(Math.abs(this.blurXFilter.strength), Math.abs(this.blurYFilter.strength)) * 2;
@@ -8957,8 +8919,7 @@ class fc {
       if (h.target === a.target && s - h.timeStamp < 200 ? ++h.clickCount : h.clickCount = 1, h.target = a.target, h.timeStamp = s, a.detail = h.clickCount, a.pointerType === "mouse") {
         const l = a.button === 2;
         this.dispatchEvent(a, l ? "rightclick" : "click");
-      } else
-        a.pointerType === "touch" && this.dispatchEvent(a, "tap");
+      } else a.pointerType === "touch" && this.dispatchEvent(a, "tap");
       this.dispatchEvent(a, "pointertap"), this.freeEvent(a);
     }
     this.freeEvent(i);
@@ -9092,8 +9053,7 @@ const pc = 1, mc = {
           t && Object.assign(this.domElement.style, s);
           break;
       }
-    else
-      t && typeof e == "string" && !Object.prototype.hasOwnProperty.call(this.cursorStyles, e) && (this.domElement.style.cursor = e);
+    else t && typeof e == "string" && !Object.prototype.hasOwnProperty.call(this.cursorStyles, e) && (this.domElement.style.cursor = e);
   }
   get pointer() {
     return this.rootPointerEvent;
@@ -12625,8 +12585,7 @@ const Wu = {
     if (Array.isArray(i)) {
       if (i.length === 1)
         return i[0];
-    } else
-      return i;
+    } else return i;
     let r;
     const n = e.dropShadow ? e.dropShadowDistance : 0, o = e.padding || 0, a = this.canvas.width / this._resolution - n - o * 2, h = this.canvas.height / this._resolution - n - o * 2, l = i.slice(), c = e.fillGradientStops.slice();
     if (!c.length) {
@@ -13266,8 +13225,7 @@ function ud(e, t, s, i, r, n) {
   if (Array.isArray(o)) {
     if (o.length === 1)
       return o[0];
-  } else
-    return o;
+  } else return o;
   let a;
   const h = s.dropShadow ? s.dropShadowDistance : 0, l = s.padding || 0, c = e.width / i - h - l * 2, u = e.height / i - h - l * 2, d = o.slice(), f = s.fillGradientStops.slice();
   if (!f.length) {
@@ -14164,8 +14122,7 @@ class yd {
   }
   onloadBackground() {
     var r, n;
-    if (!((n = (r = this.background) == null ? void 0 : r.texture) != null && n.valid))
-      return;
+    if (!((n = (r = this.background) == null ? void 0 : r.texture) != null && n.valid)) return;
     const { width: t, height: s } = this.background.texture.baseTexture, i = t / s;
     this.getForcedRatio() || (localStorage[this.getAspectKey()] = i), this.adaptSize(), this.adaptBgSize();
   }
@@ -14214,8 +14171,7 @@ class yd {
     }), this.app.ticker.add(this.updater);
   }
   updateAxis() {
-    if (!this.coordProps)
-      return;
+    if (!this.coordProps) return;
     let { container: t, step: s, color: i = "#444", onlyX: r = !1, onlyY: n = !1 } = this.coordProps;
     t.removeChildren(), s = s || 10 ** Math.log10(Math.ceil(this.w) - 1);
     var o = this, a = { x: 8 / this.getPxPerUnit(), y: 2 / this.getPxPerUnit() }, h = (l, c) => {
